@@ -1,0 +1,1145 @@
+2023-01-20 12:08:26: -----------Request----------->
+POST https://acs.bse.h2020-demeter-cloud.eu:5443/v1/auth/tokens
+
+User-Agent: python-requests/2.25.1
+Accept-Encoding: gzip, deflate
+Accept: */*
+Connection: keep-alive
+Content-Type: application/json
+Content-Length: 62
+
+{"name": "sundaresanrocks@gmail.com", "password": "Brain@123"}
+
+2023-01-20 12:08:26: <-----------Response-----------
+Status code:201
+
+Cache-Control: no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0
+X-Subject-Token: 0dc74737-ef3f-4427-b83c-8cecb2d6a0fb
+Content-Type: application/json; charset=utf-8
+Content-Length: 141
+ETag: W/"8d-fQatJy4fV0sJCvJOuOX6uWjtuH4"
+Set-Cookie: session=eyJyZWRpciI6Ii8ifQ==; path=/; expires=Fri, 20 Jan 2023 13:08:25 GMT; secure; httponly, session.sig=TqcHvLKCvDVxuMk5xVfrKEP-GSQ; path=/; expires=Fri, 20 Jan 2023 13:08:25 GMT; secure; httponly
+Date: Fri, 20 Jan 2023 12:08:25 GMT
+Connection: keep-alive
+
+{
+   "token": {
+      "methods": [
+         "password"
+      ],
+      "expires_at": "2023-01-20T13:08:25.973Z"
+   },
+   "idm_authorization_config": {
+      "level": "advanced",
+      "authzforce": false
+   }
+}
+
+2023-01-20 12:08:28: -----------Request----------->
+POST https://acs.bse.h2020-demeter-cloud.eu:3030/
+
+User-Agent: python-requests/2.25.1
+Accept-Encoding: gzip, deflate
+Accept: */*
+Connection: keep-alive
+Content-Type: application/json
+Content-Length: 167
+
+{"token": "0dc74737-ef3f-4427-b83c-8cecb2d6a0fb", "ac": "GET", "de": "https://acs.bse.h2020-demeter-cloud.eu:1029", "re": "/api/v1/resources/601ad929cc5e1504df125b04"}
+
+2023-01-20 12:08:28: <-----------Response-----------
+Status code:200
+
+Server: BaseHTTP/0.6 Python/3.6.9
+Date: Fri, 20 Jan 2023 12:08:28 GMT
+
+{
+   "id": "hlsttagnh86m9be7k0rdq29bq2",
+   "ii": 1674215508,
+   "is": "capabilitymanager@odins.es",
+   "su": "26b690e3-95a2-4e48-b465-c5f74742c624_68090e51-6ece-4c46-a917-f9e943cb12bc",
+   "de": "https://acs.bse.h2020-demeter-cloud.eu:1029",
+   "si": "MEYCIQDGNNplKNF6DRt1hD31O9CvanTxT9g1XAG96ywQba830wIhAOexS08UHB3Fk3/nbwmqW7TP9LoBYKjwZOPnFL4B1Xg3",
+   "ar": [
+      {
+         "ac": "GET",
+         "re": "/api/v1/resources/601ad929cc5e1504df125b04"
+      }
+   ],
+   "nb": 1674216508,
+   "na": 1674226508
+}
+
+2023-01-20 12:08:28: -----------Request----------->
+GET https://acs.bse.h2020-demeter-cloud.eu:1029/api/v1/resources/601ad929cc5e1504df125b04
+
+User-Agent: python-requests/2.25.1
+Accept-Encoding: gzip, deflate
+Accept: */*
+Connection: keep-alive
+content-type: application/json
+x-auth-token: {"id": "hlsttagnh86m9be7k0rdq29bq2", "ii": 1674215508, "is": "capabilitymanager@odins.es", "su": "26b690e3-95a2-4e48-b465-c5f74742c624_68090e51-6ece-4c46-a917-f9e943cb12bc", "de": "https://acs.bse.h2020-demeter-cloud.eu:1029", "si": "MEYCIQDGNNplKNF6DRt1hD31O9CvanTxT9g1XAG96ywQba830wIhAOexS08UHB3Fk3/nbwmqW7TP9LoBYKjwZOPnFL4B1Xg3", "ar": [{"ac": "GET", "re": "/api/v1/resources/601ad929cc5e1504df125b04"}], "nb": 1674216508, "na": 1674226508}
+x-subject-token: 0dc74737-ef3f-4427-b83c-8cecb2d6a0fb
+
+None
+
+2023-01-20 12:08:28: <-----------Response-----------
+Status code:200
+
+Server: BaseHTTP/0.6 Python/3.6.9
+Date: Fri, 20 Jan 2023 12:08:28 GMT
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Type: application/json
+Set-Cookie: JSESSIONID=EE710020CDFE677284A26634D459F259; Path=/; HttpOnly
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Transfer-Encoding: chunked
+
+{
+   "success": true,
+   "message": "DEH Resource found",
+   "data": {
+      "uid": "601ad929cc5e1504df125b04",
+      "name": "Estimate Animal Welfare Condition Training Algorithm",
+      "type": "service",
+      "category": [
+         "Machine Learning"
+      ],
+      "description": "The DSS on animal welfare allows to evaluate the health status of the analyzed cows , to determine the degree of well-being, in terms of nutrition, hygiene, rest and movement and, consequently, also to evaluate their productivity (that is strictly connected to their welfare). The flows, containing the data concerning the nutritional and milking values of the milk produced, and those concerning the activities and rests of the analyzed cows , are acquired by Knowage, which processes them both to display the values of the parameters and to show the results of the training and forecasting, regarding the health status of the cows, based on the pathologies of ketosis, mastitis and lameness, obtained by processing data from the Random Forest algorithm.",
+      "endpoint": "https://github.com/Engineering-Research-and-Development/demeter-estimate-animal-welfare-condition",
+      "status": 1,
+      "version": "1.0.0",
+      "maturityLevel": 1,
+      "owner": "f6bf5076-db82-4225-ab1b-d827065b0b20",
+      "author": {
+         "username": "gianluca.isgro",
+         "email": "gianluca.isgro@eng.it"
+      },
+      "tags": [
+         "cloud-infrastructure"
+      ],
+      "attachments": [],
+      "images": [],
+      "rating": 0.0,
+      "localisation": [
+         {
+            "x": 45.5993262801,
+            "y": 7.8000998497,
+            "coordinates": [
+               45.5993262801,
+               7.8000998497
+            ],
+            "type": "Point"
+         }
+      ],
+      "accessibility": 0,
+      "createAt": "2021-02-03T17:11:05.808",
+      "lastUpdate": "2021-11-03T09:57:53.052",
+      "dependencies": [
+         "python"
+      ],
+      "accessControlPolicies": [],
+      "url": "https://hub.docker.com/r/demeterengteam/estimate-animal-welfare-condition",
+      "billingInformation": [],
+      "downloadsHistory": {
+         "2021-03-30": 2,
+         "2021-09-30": 1,
+         "2021-10-08": 1,
+         "2021-12-22": 1,
+         "2022-03-29": 1,
+         "2022-07-19": 1,
+         "2022-08-22": 2,
+         "2022-09-05": 1,
+         "2022-12-16": 1,
+         "2022-12-20": 1
+      }
+   },
+   "extraData": null
+}
+
+2023-01-20 12:08:31: -----------Request----------->
+POST https://acs.bse.h2020-demeter-cloud.eu:3030/
+
+User-Agent: python-requests/2.25.1
+Accept-Encoding: gzip, deflate
+Accept: */*
+Connection: keep-alive
+content-type: application/json
+x-auth-token: {"id": "hlsttagnh86m9be7k0rdq29bq2", "ii": 1674215508, "is": "capabilitymanager@odins.es", "su": "26b690e3-95a2-4e48-b465-c5f74742c624_68090e51-6ece-4c46-a917-f9e943cb12bc", "de": "https://acs.bse.h2020-demeter-cloud.eu:1029", "si": "MEYCIQDGNNplKNF6DRt1hD31O9CvanTxT9g1XAG96ywQba830wIhAOexS08UHB3Fk3/nbwmqW7TP9LoBYKjwZOPnFL4B1Xg3", "ar": [{"ac": "GET", "re": "/api/v1/resources/601ad929cc5e1504df125b04"}], "nb": 1674216508, "na": 1674226508}
+x-subject-token: 0dc74737-ef3f-4427-b83c-8cecb2d6a0fb
+Content-Length: 159
+
+{"token": "0dc74737-ef3f-4427-b83c-8cecb2d6a0fb", "ac": "GET", "de": "https://bse.h2020-demeter-cloud.eu:443", "re": "/api/BSE/service/affectionate_zhukovsky"}
+
+2023-01-20 12:08:31: <-----------Response-----------
+Status code:200
+
+Server: BaseHTTP/0.6 Python/3.6.9
+Date: Fri, 20 Jan 2023 12:08:31 GMT
+
+{
+   "id": "ri0g4btk2jeaoo7bfulmgi6720",
+   "ii": 1674215511,
+   "is": "capabilitymanager@odins.es",
+   "su": "e36f9c5c-abde-40f0-9339-767eca27693e_5f8715cd-e9d5-4690-ae25-340ac500cdc1",
+   "de": "https://bse.h2020-demeter-cloud.eu:443",
+   "si": "MEUCIBnxEsJE36s3fHYsiJ+aRueHzwcU8dAnK7zWjaF9ypuAAiEAxAuj9tUu4d3FkobpbaaxLCBR+dvy/KeH2p2+ZwcIbS4=",
+   "ar": [
+      {
+         "ac": "GET",
+         "re": "/api/BSE/service/affectionate_zhukovsky"
+      }
+   ],
+   "nb": 1674216511,
+   "na": 1674226511
+}
+
+2023-01-20 12:08:31: -----------Request----------->
+GET https://bse.h2020-demeter-cloud.eu:443/api/BSE/service/affectionate_zhukovsky
+
+User-Agent: python-requests/2.25.1
+Accept-Encoding: gzip, deflate
+Accept: */*
+Connection: keep-alive
+content-type: application/json
+x-auth-token: {"id": "ri0g4btk2jeaoo7bfulmgi6720", "ii": 1674215511, "is": "capabilitymanager@odins.es", "su": "e36f9c5c-abde-40f0-9339-767eca27693e_5f8715cd-e9d5-4690-ae25-340ac500cdc1", "de": "https://bse.h2020-demeter-cloud.eu:443", "si": "MEUCIBnxEsJE36s3fHYsiJ+aRueHzwcU8dAnK7zWjaF9ypuAAiEAxAuj9tUu4d3FkobpbaaxLCBR+dvy/KeH2p2+ZwcIbS4=", "ar": [{"ac": "GET", "re": "/api/BSE/service/affectionate_zhukovsky"}], "nb": 1674216511, "na": 1674226511}
+x-subject-token: 0dc74737-ef3f-4427-b83c-8cecb2d6a0fb
+
+None
+
+2023-01-20 12:08:31: <-----------Response-----------
+Status code:200
+
+Server: nginx/1.19.0
+Date: Fri, 20 Jan 2023 12:08:31 GMT
+Content-Type: application/json
+Content-Length: 825
+Connection: keep-alive
+Vary: Accept, Cookie
+Allow: GET, HEAD, OPTIONS
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=3600; includeSubDomains; preload
+X-Content-Type-Options: nosniff
+
+[
+   {
+      "id": "DEMETER:BSE-ID:(affectionate_zhukovsky)-3ad47d22-0d05-49e8-8493-500489d0c39e",
+      "service_name": "affectionate_zhukovsky",
+      "deh_id": "601ad929cc5e1504df125b04",
+      "address": "0.0.0.1",
+      "port": 0,
+      "tags": [
+         "latest"
+      ],
+      "meta": {
+         "applicationCategory": "string",
+         "description": "string",
+         "version": 0.0,
+         "featureList": [
+            "string"
+         ],
+         "dataEncryption": true,
+         "authentication": true,
+         "conditionsOfAccess": "string",
+         "timeRequired": 0,
+         "quota": "string",
+         "offers": 0.0,
+         "TermsOfService": "string",
+         "usageInfo": "string",
+         "provider": "string",
+         "spatial": "string",
+         "aggregateRating": 0,
+         "apiModel": {
+            "dataProtocol": "REST",
+            "baseUrl": "string",
+            "relativePath": "string",
+            "method": "GET",
+            "URLRequiredParams": {},
+            "URLOptionalParams": {},
+            "dataParams": {},
+            "successResponse": [
+               0
+            ],
+            "errorResponse": [
+               0
+            ],
+            "sampleCall": "string",
+            "topic": "string",
+            "payloadFormat": "JSON",
+            "payloadRepresentation": {}
+         }
+      }
+   }
+]
+
+2023-01-20 12:09:07: -----------Request----------->
+POST https://acs.bse.h2020-demeter-cloud.eu:3030/
+
+User-Agent: python-requests/2.25.1
+Accept-Encoding: gzip, deflate
+Accept: */*
+Connection: keep-alive
+content-type: application/json
+Content-Length: 141
+
+{"token": "0dc74737-ef3f-4427-b83c-8cecb2d6a0fb", "ac": "POST", "de": "https://acs.bse.h2020-demeter-cloud.eu:1029", "re": "/api/v1/metrics"}
+
+2023-01-20 12:09:07: <-----------Response-----------
+Status code:200
+
+Server: BaseHTTP/0.6 Python/3.6.9
+Date: Fri, 20 Jan 2023 12:09:07 GMT
+
+{
+   "id": "mj96i0c4g9gqdjlmpnmjditjig",
+   "ii": 1674215547,
+   "is": "capabilitymanager@odins.es",
+   "su": "26b690e3-95a2-4e48-b465-c5f74742c624_68090e51-6ece-4c46-a917-f9e943cb12bc",
+   "de": "https://acs.bse.h2020-demeter-cloud.eu:1029",
+   "si": "MEYCIQC5fG6jY0QBLWqPdslo/2hz/hamnN+P5keuJ/lCJvUMPQIhAM467Xj3IJ1+tCLb7knRjHDxyV0xMeaJaRshtUum+PrL",
+   "ar": [
+      {
+         "ac": "POST",
+         "re": "/api/v1/metrics"
+      }
+   ],
+   "nb": 1674216547,
+   "na": 1674226547
+}
+
+2023-01-20 12:09:37: -----------Request----------->
+POST https://acs.bse.h2020-demeter-cloud.eu:3030/
+
+User-Agent: python-requests/2.25.1
+Accept-Encoding: gzip, deflate
+Accept: */*
+Connection: keep-alive
+Content-Type: application/json
+Content-Length: 167
+
+{"token": "0dc74737-ef3f-4427-b83c-8cecb2d6a0fb", "ac": "GET", "de": "https://acs.bse.h2020-demeter-cloud.eu:1029", "re": "/api/v1/resources/601ad929cc5e1504df125b04"}
+
+2023-01-20 12:09:37: <-----------Response-----------
+Status code:200
+
+Server: BaseHTTP/0.6 Python/3.6.9
+Date: Fri, 20 Jan 2023 12:09:37 GMT
+
+{
+   "id": "1hmjtvdjmu9ei2qpa1m6j12id4",
+   "ii": 1674215577,
+   "is": "capabilitymanager@odins.es",
+   "su": "26b690e3-95a2-4e48-b465-c5f74742c624_68090e51-6ece-4c46-a917-f9e943cb12bc",
+   "de": "https://acs.bse.h2020-demeter-cloud.eu:1029",
+   "si": "MEQCICw/UPz3WrXRsXMjIG82X45n8188P43leZHYFaOO0iLpAiAI8hkTe/ebrmhSaAindFBhQnvH0GoAuWv32z7bGEuQvQ==",
+   "ar": [
+      {
+         "ac": "GET",
+         "re": "/api/v1/resources/601ad929cc5e1504df125b04"
+      }
+   ],
+   "nb": 1674216577,
+   "na": 1674226577
+}
+
+2023-01-20 12:09:38: -----------Request----------->
+GET https://acs.bse.h2020-demeter-cloud.eu:1029/api/v1/resources/601ad929cc5e1504df125b04
+
+User-Agent: python-requests/2.25.1
+Accept-Encoding: gzip, deflate
+Accept: application/json
+Connection: keep-alive
+content-type: application/json
+x-auth-token: {"id": "1hmjtvdjmu9ei2qpa1m6j12id4", "ii": 1674215577, "is": "capabilitymanager@odins.es", "su": "26b690e3-95a2-4e48-b465-c5f74742c624_68090e51-6ece-4c46-a917-f9e943cb12bc", "de": "https://acs.bse.h2020-demeter-cloud.eu:1029", "si": "MEQCICw/UPz3WrXRsXMjIG82X45n8188P43leZHYFaOO0iLpAiAI8hkTe/ebrmhSaAindFBhQnvH0GoAuWv32z7bGEuQvQ==", "ar": [{"ac": "GET", "re": "/api/v1/resources/601ad929cc5e1504df125b04"}], "nb": 1674216577, "na": 1674226577}
+x-subject-token: 0dc74737-ef3f-4427-b83c-8cecb2d6a0fb
+
+None
+
+2023-01-20 12:09:38: <-----------Response-----------
+Status code:200
+
+Server: BaseHTTP/0.6 Python/3.6.9
+Date: Fri, 20 Jan 2023 12:09:38 GMT
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Type: application/json
+Set-Cookie: JSESSIONID=6F6805C0A988918B2C1FD84657FD7119; Path=/; HttpOnly
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Transfer-Encoding: chunked
+
+{
+   "success": true,
+   "message": "DEH Resource found",
+   "data": {
+      "uid": "601ad929cc5e1504df125b04",
+      "name": "Estimate Animal Welfare Condition Training Algorithm",
+      "type": "service",
+      "category": [
+         "Machine Learning"
+      ],
+      "description": "The DSS on animal welfare allows to evaluate the health status of the analyzed cows , to determine the degree of well-being, in terms of nutrition, hygiene, rest and movement and, consequently, also to evaluate their productivity (that is strictly connected to their welfare). The flows, containing the data concerning the nutritional and milking values of the milk produced, and those concerning the activities and rests of the analyzed cows , are acquired by Knowage, which processes them both to display the values of the parameters and to show the results of the training and forecasting, regarding the health status of the cows, based on the pathologies of ketosis, mastitis and lameness, obtained by processing data from the Random Forest algorithm.",
+      "endpoint": "https://github.com/Engineering-Research-and-Development/demeter-estimate-animal-welfare-condition",
+      "status": 1,
+      "version": "1.0.0",
+      "maturityLevel": 1,
+      "owner": "f6bf5076-db82-4225-ab1b-d827065b0b20",
+      "author": {
+         "username": "gianluca.isgro",
+         "email": "gianluca.isgro@eng.it"
+      },
+      "tags": [
+         "cloud-infrastructure"
+      ],
+      "attachments": [],
+      "images": [],
+      "rating": 0.0,
+      "localisation": [
+         {
+            "x": 45.5993262801,
+            "y": 7.8000998497,
+            "coordinates": [
+               45.5993262801,
+               7.8000998497
+            ],
+            "type": "Point"
+         }
+      ],
+      "accessibility": 0,
+      "createAt": "2021-02-03T17:11:05.808",
+      "lastUpdate": "2021-11-03T09:57:53.052",
+      "dependencies": [
+         "python"
+      ],
+      "accessControlPolicies": [],
+      "url": "https://hub.docker.com/r/demeterengteam/estimate-animal-welfare-condition",
+      "billingInformation": [],
+      "downloadsHistory": {
+         "2021-03-30": 2,
+         "2021-09-30": 1,
+         "2021-10-08": 1,
+         "2021-12-22": 1,
+         "2022-03-29": 1,
+         "2022-07-19": 1,
+         "2022-08-22": 2,
+         "2022-09-05": 1,
+         "2022-12-16": 1,
+         "2022-12-20": 1
+      }
+   },
+   "extraData": null
+}
+
+2023-01-20 12:09:40: -----------Request----------->
+POST https://acs.bse.h2020-demeter-cloud.eu:3030/
+
+User-Agent: python-requests/2.25.1
+Accept-Encoding: gzip, deflate
+Accept: application/json
+Connection: keep-alive
+content-type: application/json
+x-auth-token: {"id": "1hmjtvdjmu9ei2qpa1m6j12id4", "ii": 1674215577, "is": "capabilitymanager@odins.es", "su": "26b690e3-95a2-4e48-b465-c5f74742c624_68090e51-6ece-4c46-a917-f9e943cb12bc", "de": "https://acs.bse.h2020-demeter-cloud.eu:1029", "si": "MEQCICw/UPz3WrXRsXMjIG82X45n8188P43leZHYFaOO0iLpAiAI8hkTe/ebrmhSaAindFBhQnvH0GoAuWv32z7bGEuQvQ==", "ar": [{"ac": "GET", "re": "/api/v1/resources/601ad929cc5e1504df125b04"}], "nb": 1674216577, "na": 1674226577}
+x-subject-token: 0dc74737-ef3f-4427-b83c-8cecb2d6a0fb
+Content-Length: 159
+
+{"token": "0dc74737-ef3f-4427-b83c-8cecb2d6a0fb", "ac": "GET", "de": "https://bse.h2020-demeter-cloud.eu:443", "re": "/api/BSE/service/affectionate_zhukovsky"}
+
+2023-01-20 12:09:40: <-----------Response-----------
+Status code:200
+
+Server: BaseHTTP/0.6 Python/3.6.9
+Date: Fri, 20 Jan 2023 12:09:40 GMT
+
+{
+   "id": "7h3h9vg9568l2889ofiopddjbj",
+   "ii": 1674215580,
+   "is": "capabilitymanager@odins.es",
+   "su": "e36f9c5c-abde-40f0-9339-767eca27693e_5f8715cd-e9d5-4690-ae25-340ac500cdc1",
+   "de": "https://bse.h2020-demeter-cloud.eu:443",
+   "si": "MEQCIC0x6FXKUy3wYQxMK8DYCwlmNXIJLUcR1MDunTxKBHFUAiBM1hNC5j3Kr6SDtEX8oP4+dpHx94gjkcwBi/Pa4CaWmw==",
+   "ar": [
+      {
+         "ac": "GET",
+         "re": "/api/BSE/service/affectionate_zhukovsky"
+      }
+   ],
+   "nb": 1674216580,
+   "na": 1674226580
+}
+
+2023-01-20 12:09:41: -----------Request----------->
+GET https://bse.h2020-demeter-cloud.eu:443/api/BSE/service/affectionate_zhukovsky
+
+User-Agent: python-requests/2.25.1
+Accept-Encoding: gzip, deflate
+Accept: application/json
+Connection: keep-alive
+content-type: application/json
+x-auth-token: {"id": "7h3h9vg9568l2889ofiopddjbj", "ii": 1674215580, "is": "capabilitymanager@odins.es", "su": "e36f9c5c-abde-40f0-9339-767eca27693e_5f8715cd-e9d5-4690-ae25-340ac500cdc1", "de": "https://bse.h2020-demeter-cloud.eu:443", "si": "MEQCIC0x6FXKUy3wYQxMK8DYCwlmNXIJLUcR1MDunTxKBHFUAiBM1hNC5j3Kr6SDtEX8oP4+dpHx94gjkcwBi/Pa4CaWmw==", "ar": [{"ac": "GET", "re": "/api/BSE/service/affectionate_zhukovsky"}], "nb": 1674216580, "na": 1674226580}
+x-subject-token: 0dc74737-ef3f-4427-b83c-8cecb2d6a0fb
+
+None
+
+2023-01-20 12:09:41: <-----------Response-----------
+Status code:200
+
+Server: nginx/1.19.0
+Date: Fri, 20 Jan 2023 12:09:41 GMT
+Content-Type: application/json
+Content-Length: 825
+Connection: keep-alive
+Vary: Accept, Cookie
+Allow: GET, HEAD, OPTIONS
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=3600; includeSubDomains; preload
+X-Content-Type-Options: nosniff
+
+[
+   {
+      "id": "DEMETER:BSE-ID:(affectionate_zhukovsky)-3ad47d22-0d05-49e8-8493-500489d0c39e",
+      "service_name": "affectionate_zhukovsky",
+      "deh_id": "601ad929cc5e1504df125b04",
+      "address": "0.0.0.1",
+      "port": 0,
+      "tags": [
+         "latest"
+      ],
+      "meta": {
+         "applicationCategory": "string",
+         "description": "string",
+         "version": 0.0,
+         "featureList": [
+            "string"
+         ],
+         "dataEncryption": true,
+         "authentication": true,
+         "conditionsOfAccess": "string",
+         "timeRequired": 0,
+         "quota": "string",
+         "offers": 0.0,
+         "TermsOfService": "string",
+         "usageInfo": "string",
+         "provider": "string",
+         "spatial": "string",
+         "aggregateRating": 0,
+         "apiModel": {
+            "dataProtocol": "REST",
+            "baseUrl": "string",
+            "relativePath": "string",
+            "method": "GET",
+            "URLRequiredParams": {},
+            "URLOptionalParams": {},
+            "dataParams": {},
+            "successResponse": [
+               0
+            ],
+            "errorResponse": [
+               0
+            ],
+            "sampleCall": "string",
+            "topic": "string",
+            "payloadFormat": "JSON",
+            "payloadRepresentation": {}
+         }
+      }
+   }
+]
+
+2023-01-20 12:10:27: -----------Request----------->
+POST https://acs.bse.h2020-demeter-cloud.eu:3030/
+
+User-Agent: python-requests/2.25.1
+Accept-Encoding: gzip, deflate
+Accept: */*
+Connection: keep-alive
+content-type: application/json
+Content-Length: 141
+
+{"token": "0dc74737-ef3f-4427-b83c-8cecb2d6a0fb", "ac": "POST", "de": "https://acs.bse.h2020-demeter-cloud.eu:1029", "re": "/api/v1/metrics"}
+
+2023-01-20 12:10:27: <-----------Response-----------
+Status code:200
+
+Server: BaseHTTP/0.6 Python/3.6.9
+Date: Fri, 20 Jan 2023 12:10:26 GMT
+
+{
+   "id": "9ep6cemm0r9ifvr9s83n4k58a2",
+   "ii": 1674215626,
+   "is": "capabilitymanager@odins.es",
+   "su": "26b690e3-95a2-4e48-b465-c5f74742c624_68090e51-6ece-4c46-a917-f9e943cb12bc",
+   "de": "https://acs.bse.h2020-demeter-cloud.eu:1029",
+   "si": "MEUCIGzps3UPdvBV4uum6qIb3C87USVdeMzLlWpI3k7F9CTOAiEAhbV/kep8lfLRstwwyVqCUuyiSx39YjPDHZbL4OH3anY=",
+   "ar": [
+      {
+         "ac": "POST",
+         "re": "/api/v1/metrics"
+      }
+   ],
+   "nb": 1674216626,
+   "na": 1674226626
+}
+
+2023-01-20 12:10:47: -----------Request----------->
+POST https://acs.bse.h2020-demeter-cloud.eu:3030/
+
+User-Agent: python-requests/2.25.1
+Accept-Encoding: gzip, deflate
+Accept: */*
+Connection: keep-alive
+Content-Type: application/json
+Content-Length: 167
+
+{"token": "0dc74737-ef3f-4427-b83c-8cecb2d6a0fb", "ac": "GET", "de": "https://acs.bse.h2020-demeter-cloud.eu:1029", "re": "/api/v1/resources/601ad929cc5e1504df125b04"}
+
+2023-01-20 12:10:47: <-----------Response-----------
+Status code:200
+
+Server: BaseHTTP/0.6 Python/3.6.9
+Date: Fri, 20 Jan 2023 12:10:47 GMT
+
+{
+   "id": "p8r7n2fe3e8n7quk394q3547jk",
+   "ii": 1674215647,
+   "is": "capabilitymanager@odins.es",
+   "su": "26b690e3-95a2-4e48-b465-c5f74742c624_68090e51-6ece-4c46-a917-f9e943cb12bc",
+   "de": "https://acs.bse.h2020-demeter-cloud.eu:1029",
+   "si": "MEQCIGMWT1V0AcSjx8Rq2TZSYzBx5ZYX861eKszZeIwEgDApAiA+my7IV1B4C7zsfhVMgTxvO/GDp81V82kib/X0zqv1ZA==",
+   "ar": [
+      {
+         "ac": "GET",
+         "re": "/api/v1/resources/601ad929cc5e1504df125b04"
+      }
+   ],
+   "nb": 1674216647,
+   "na": 1674226647
+}
+
+2023-01-20 12:10:47: -----------Request----------->
+GET https://acs.bse.h2020-demeter-cloud.eu:1029/api/v1/resources/601ad929cc5e1504df125b04
+
+User-Agent: python-requests/2.25.1
+Accept-Encoding: gzip, deflate
+Accept: application/json
+Connection: keep-alive
+content-type: application/json
+x-auth-token: {"id": "p8r7n2fe3e8n7quk394q3547jk", "ii": 1674215647, "is": "capabilitymanager@odins.es", "su": "26b690e3-95a2-4e48-b465-c5f74742c624_68090e51-6ece-4c46-a917-f9e943cb12bc", "de": "https://acs.bse.h2020-demeter-cloud.eu:1029", "si": "MEQCIGMWT1V0AcSjx8Rq2TZSYzBx5ZYX861eKszZeIwEgDApAiA+my7IV1B4C7zsfhVMgTxvO/GDp81V82kib/X0zqv1ZA==", "ar": [{"ac": "GET", "re": "/api/v1/resources/601ad929cc5e1504df125b04"}], "nb": 1674216647, "na": 1674226647}
+x-subject-token: 0dc74737-ef3f-4427-b83c-8cecb2d6a0fb
+
+None
+
+2023-01-20 12:10:47: <-----------Response-----------
+Status code:200
+
+Server: BaseHTTP/0.6 Python/3.6.9
+Date: Fri, 20 Jan 2023 12:10:47 GMT
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Type: application/json
+Set-Cookie: JSESSIONID=FAB553739A7E3C2C92502FCEDA3DE5EF; Path=/; HttpOnly
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Transfer-Encoding: chunked
+
+{
+   "success": true,
+   "message": "DEH Resource found",
+   "data": {
+      "uid": "601ad929cc5e1504df125b04",
+      "name": "Estimate Animal Welfare Condition Training Algorithm",
+      "type": "service",
+      "category": [
+         "Machine Learning"
+      ],
+      "description": "The DSS on animal welfare allows to evaluate the health status of the analyzed cows , to determine the degree of well-being, in terms of nutrition, hygiene, rest and movement and, consequently, also to evaluate their productivity (that is strictly connected to their welfare). The flows, containing the data concerning the nutritional and milking values of the milk produced, and those concerning the activities and rests of the analyzed cows , are acquired by Knowage, which processes them both to display the values of the parameters and to show the results of the training and forecasting, regarding the health status of the cows, based on the pathologies of ketosis, mastitis and lameness, obtained by processing data from the Random Forest algorithm.",
+      "endpoint": "https://github.com/Engineering-Research-and-Development/demeter-estimate-animal-welfare-condition",
+      "status": 1,
+      "version": "1.0.0",
+      "maturityLevel": 1,
+      "owner": "f6bf5076-db82-4225-ab1b-d827065b0b20",
+      "author": {
+         "username": "gianluca.isgro",
+         "email": "gianluca.isgro@eng.it"
+      },
+      "tags": [
+         "cloud-infrastructure"
+      ],
+      "attachments": [],
+      "images": [],
+      "rating": 0.0,
+      "localisation": [
+         {
+            "x": 45.5993262801,
+            "y": 7.8000998497,
+            "coordinates": [
+               45.5993262801,
+               7.8000998497
+            ],
+            "type": "Point"
+         }
+      ],
+      "accessibility": 0,
+      "createAt": "2021-02-03T17:11:05.808",
+      "lastUpdate": "2021-11-03T09:57:53.052",
+      "dependencies": [
+         "python"
+      ],
+      "accessControlPolicies": [],
+      "url": "https://hub.docker.com/r/demeterengteam/estimate-animal-welfare-condition",
+      "billingInformation": [],
+      "downloadsHistory": {
+         "2021-03-30": 2,
+         "2021-09-30": 1,
+         "2021-10-08": 1,
+         "2021-12-22": 1,
+         "2022-03-29": 1,
+         "2022-07-19": 1,
+         "2022-08-22": 2,
+         "2022-09-05": 1,
+         "2022-12-16": 1,
+         "2022-12-20": 1
+      }
+   },
+   "extraData": null
+}
+
+2023-01-20 12:10:50: -----------Request----------->
+POST https://acs.bse.h2020-demeter-cloud.eu:3030/
+
+User-Agent: python-requests/2.25.1
+Accept-Encoding: gzip, deflate
+Accept: application/json
+Connection: keep-alive
+content-type: application/json
+x-auth-token: {"id": "p8r7n2fe3e8n7quk394q3547jk", "ii": 1674215647, "is": "capabilitymanager@odins.es", "su": "26b690e3-95a2-4e48-b465-c5f74742c624_68090e51-6ece-4c46-a917-f9e943cb12bc", "de": "https://acs.bse.h2020-demeter-cloud.eu:1029", "si": "MEQCIGMWT1V0AcSjx8Rq2TZSYzBx5ZYX861eKszZeIwEgDApAiA+my7IV1B4C7zsfhVMgTxvO/GDp81V82kib/X0zqv1ZA==", "ar": [{"ac": "GET", "re": "/api/v1/resources/601ad929cc5e1504df125b04"}], "nb": 1674216647, "na": 1674226647}
+x-subject-token: 0dc74737-ef3f-4427-b83c-8cecb2d6a0fb
+Content-Length: 159
+
+{"token": "0dc74737-ef3f-4427-b83c-8cecb2d6a0fb", "ac": "GET", "de": "https://bse.h2020-demeter-cloud.eu:443", "re": "/api/BSE/service/affectionate_zhukovsky"}
+
+2023-01-20 12:10:50: <-----------Response-----------
+Status code:200
+
+Server: BaseHTTP/0.6 Python/3.6.9
+Date: Fri, 20 Jan 2023 12:10:50 GMT
+
+{
+   "id": "4nnuod77muha1u1r664qi6ubqd",
+   "ii": 1674215650,
+   "is": "capabilitymanager@odins.es",
+   "su": "e36f9c5c-abde-40f0-9339-767eca27693e_5f8715cd-e9d5-4690-ae25-340ac500cdc1",
+   "de": "https://bse.h2020-demeter-cloud.eu:443",
+   "si": "MEUCIQCl2Uhgmpn1UZyPPFqOr7H9LorIUO03KdNffhG7IAcp4gIgYGNywanFZewYfnhXvXrTLl7wzWBs92O+7Omba/KJ7DQ=",
+   "ar": [
+      {
+         "ac": "GET",
+         "re": "/api/BSE/service/affectionate_zhukovsky"
+      }
+   ],
+   "nb": 1674216650,
+   "na": 1674226650
+}
+
+2023-01-20 12:10:50: -----------Request----------->
+GET https://bse.h2020-demeter-cloud.eu:443/api/BSE/service/affectionate_zhukovsky
+
+User-Agent: python-requests/2.25.1
+Accept-Encoding: gzip, deflate
+Accept: application/json
+Connection: keep-alive
+content-type: application/json
+x-auth-token: {"id": "4nnuod77muha1u1r664qi6ubqd", "ii": 1674215650, "is": "capabilitymanager@odins.es", "su": "e36f9c5c-abde-40f0-9339-767eca27693e_5f8715cd-e9d5-4690-ae25-340ac500cdc1", "de": "https://bse.h2020-demeter-cloud.eu:443", "si": "MEUCIQCl2Uhgmpn1UZyPPFqOr7H9LorIUO03KdNffhG7IAcp4gIgYGNywanFZewYfnhXvXrTLl7wzWBs92O+7Omba/KJ7DQ=", "ar": [{"ac": "GET", "re": "/api/BSE/service/affectionate_zhukovsky"}], "nb": 1674216650, "na": 1674226650}
+x-subject-token: 0dc74737-ef3f-4427-b83c-8cecb2d6a0fb
+
+None
+
+2023-01-20 12:10:50: <-----------Response-----------
+Status code:200
+
+Server: nginx/1.19.0
+Date: Fri, 20 Jan 2023 12:10:50 GMT
+Content-Type: application/json
+Content-Length: 825
+Connection: keep-alive
+Vary: Accept, Cookie
+Allow: GET, HEAD, OPTIONS
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=3600; includeSubDomains; preload
+X-Content-Type-Options: nosniff
+
+[
+   {
+      "id": "DEMETER:BSE-ID:(affectionate_zhukovsky)-3ad47d22-0d05-49e8-8493-500489d0c39e",
+      "service_name": "affectionate_zhukovsky",
+      "deh_id": "601ad929cc5e1504df125b04",
+      "address": "0.0.0.1",
+      "port": 0,
+      "tags": [
+         "latest"
+      ],
+      "meta": {
+         "applicationCategory": "string",
+         "description": "string",
+         "version": 0.0,
+         "featureList": [
+            "string"
+         ],
+         "dataEncryption": true,
+         "authentication": true,
+         "conditionsOfAccess": "string",
+         "timeRequired": 0,
+         "quota": "string",
+         "offers": 0.0,
+         "TermsOfService": "string",
+         "usageInfo": "string",
+         "provider": "string",
+         "spatial": "string",
+         "aggregateRating": 0,
+         "apiModel": {
+            "dataProtocol": "REST",
+            "baseUrl": "string",
+            "relativePath": "string",
+            "method": "GET",
+            "URLRequiredParams": {},
+            "URLOptionalParams": {},
+            "dataParams": {},
+            "successResponse": [
+               0
+            ],
+            "errorResponse": [
+               0
+            ],
+            "sampleCall": "string",
+            "topic": "string",
+            "payloadFormat": "JSON",
+            "payloadRepresentation": {}
+         }
+      }
+   }
+]
+
+2023-01-20 12:11:34: -----------Request----------->
+POST https://acs.bse.h2020-demeter-cloud.eu:3030/
+
+User-Agent: python-requests/2.25.1
+Accept-Encoding: gzip, deflate
+Accept: */*
+Connection: keep-alive
+content-type: application/json
+Content-Length: 141
+
+{"token": "0dc74737-ef3f-4427-b83c-8cecb2d6a0fb", "ac": "POST", "de": "https://acs.bse.h2020-demeter-cloud.eu:1029", "re": "/api/v1/metrics"}
+
+2023-01-20 12:11:34: <-----------Response-----------
+Status code:200
+
+Server: BaseHTTP/0.6 Python/3.6.9
+Date: Fri, 20 Jan 2023 12:11:34 GMT
+
+{
+   "id": "qd9bokc3lmclvl9nj4rj24jf0g",
+   "ii": 1674215694,
+   "is": "capabilitymanager@odins.es",
+   "su": "26b690e3-95a2-4e48-b465-c5f74742c624_68090e51-6ece-4c46-a917-f9e943cb12bc",
+   "de": "https://acs.bse.h2020-demeter-cloud.eu:1029",
+   "si": "MEUCIQC/sVhIvy1PjaepV1qcXMZ4xyjoAD3Fp4sD6PhwjBTgKQIgK3h7pdclGyBPm7xwC6XYvJZ5Ac4c5cKqgf36cPc5rEI=",
+   "ar": [
+      {
+         "ac": "POST",
+         "re": "/api/v1/metrics"
+      }
+   ],
+   "nb": 1674216694,
+   "na": 1674226694
+}
+
+2023-01-20 12:11:56: -----------Request----------->
+POST https://acs.bse.h2020-demeter-cloud.eu:3030/
+
+User-Agent: python-requests/2.25.1
+Accept-Encoding: gzip, deflate
+Accept: */*
+Connection: keep-alive
+Content-Type: application/json
+Content-Length: 167
+
+{"token": "0dc74737-ef3f-4427-b83c-8cecb2d6a0fb", "ac": "GET", "de": "https://acs.bse.h2020-demeter-cloud.eu:1029", "re": "/api/v1/resources/601ad929cc5e1504df125b04"}
+
+2023-01-20 12:11:56: <-----------Response-----------
+Status code:200
+
+Server: BaseHTTP/0.6 Python/3.6.9
+Date: Fri, 20 Jan 2023 12:11:56 GMT
+
+{
+   "id": "an0k6b6pu16iinuu9l3br2leh3",
+   "ii": 1674215716,
+   "is": "capabilitymanager@odins.es",
+   "su": "26b690e3-95a2-4e48-b465-c5f74742c624_68090e51-6ece-4c46-a917-f9e943cb12bc",
+   "de": "https://acs.bse.h2020-demeter-cloud.eu:1029",
+   "si": "MEQCIF0+SFV29lByzpW6Niggi/sCdXvnsJn7bJFxOjN9dI0uAiBemAfKvGI/snbXE3PggKYIvWUQmW7ddXR37KxG8u96bg==",
+   "ar": [
+      {
+         "ac": "GET",
+         "re": "/api/v1/resources/601ad929cc5e1504df125b04"
+      }
+   ],
+   "nb": 1674216716,
+   "na": 1674226716
+}
+
+2023-01-20 12:11:57: -----------Request----------->
+GET https://acs.bse.h2020-demeter-cloud.eu:1029/api/v1/resources/601ad929cc5e1504df125b04
+
+User-Agent: python-requests/2.25.1
+Accept-Encoding: gzip, deflate
+Accept: application/json
+Connection: keep-alive
+content-type: application/json
+x-auth-token: {"id": "an0k6b6pu16iinuu9l3br2leh3", "ii": 1674215716, "is": "capabilitymanager@odins.es", "su": "26b690e3-95a2-4e48-b465-c5f74742c624_68090e51-6ece-4c46-a917-f9e943cb12bc", "de": "https://acs.bse.h2020-demeter-cloud.eu:1029", "si": "MEQCIF0+SFV29lByzpW6Niggi/sCdXvnsJn7bJFxOjN9dI0uAiBemAfKvGI/snbXE3PggKYIvWUQmW7ddXR37KxG8u96bg==", "ar": [{"ac": "GET", "re": "/api/v1/resources/601ad929cc5e1504df125b04"}], "nb": 1674216716, "na": 1674226716}
+x-subject-token: 0dc74737-ef3f-4427-b83c-8cecb2d6a0fb
+
+None
+
+2023-01-20 12:11:57: <-----------Response-----------
+Status code:200
+
+Server: BaseHTTP/0.6 Python/3.6.9
+Date: Fri, 20 Jan 2023 12:11:56 GMT
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Type: application/json
+Set-Cookie: JSESSIONID=C1AE09E9627D7E103921BAED1BFF0993; Path=/; HttpOnly
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Transfer-Encoding: chunked
+
+{
+   "success": true,
+   "message": "DEH Resource found",
+   "data": {
+      "uid": "601ad929cc5e1504df125b04",
+      "name": "Estimate Animal Welfare Condition Training Algorithm",
+      "type": "service",
+      "category": [
+         "Machine Learning"
+      ],
+      "description": "The DSS on animal welfare allows to evaluate the health status of the analyzed cows , to determine the degree of well-being, in terms of nutrition, hygiene, rest and movement and, consequently, also to evaluate their productivity (that is strictly connected to their welfare). The flows, containing the data concerning the nutritional and milking values of the milk produced, and those concerning the activities and rests of the analyzed cows , are acquired by Knowage, which processes them both to display the values of the parameters and to show the results of the training and forecasting, regarding the health status of the cows, based on the pathologies of ketosis, mastitis and lameness, obtained by processing data from the Random Forest algorithm.",
+      "endpoint": "https://github.com/Engineering-Research-and-Development/demeter-estimate-animal-welfare-condition",
+      "status": 1,
+      "version": "1.0.0",
+      "maturityLevel": 1,
+      "owner": "f6bf5076-db82-4225-ab1b-d827065b0b20",
+      "author": {
+         "username": "gianluca.isgro",
+         "email": "gianluca.isgro@eng.it"
+      },
+      "tags": [
+         "cloud-infrastructure"
+      ],
+      "attachments": [],
+      "images": [],
+      "rating": 0.0,
+      "localisation": [
+         {
+            "x": 45.5993262801,
+            "y": 7.8000998497,
+            "coordinates": [
+               45.5993262801,
+               7.8000998497
+            ],
+            "type": "Point"
+         }
+      ],
+      "accessibility": 0,
+      "createAt": "2021-02-03T17:11:05.808",
+      "lastUpdate": "2021-11-03T09:57:53.052",
+      "dependencies": [
+         "python"
+      ],
+      "accessControlPolicies": [],
+      "url": "https://hub.docker.com/r/demeterengteam/estimate-animal-welfare-condition",
+      "billingInformation": [],
+      "downloadsHistory": {
+         "2021-03-30": 2,
+         "2021-09-30": 1,
+         "2021-10-08": 1,
+         "2021-12-22": 1,
+         "2022-03-29": 1,
+         "2022-07-19": 1,
+         "2022-08-22": 2,
+         "2022-09-05": 1,
+         "2022-12-16": 1,
+         "2022-12-20": 1
+      }
+   },
+   "extraData": null
+}
+
+2023-01-20 12:11:59: -----------Request----------->
+POST https://acs.bse.h2020-demeter-cloud.eu:3030/
+
+User-Agent: python-requests/2.25.1
+Accept-Encoding: gzip, deflate
+Accept: application/json
+Connection: keep-alive
+content-type: application/json
+x-auth-token: {"id": "an0k6b6pu16iinuu9l3br2leh3", "ii": 1674215716, "is": "capabilitymanager@odins.es", "su": "26b690e3-95a2-4e48-b465-c5f74742c624_68090e51-6ece-4c46-a917-f9e943cb12bc", "de": "https://acs.bse.h2020-demeter-cloud.eu:1029", "si": "MEQCIF0+SFV29lByzpW6Niggi/sCdXvnsJn7bJFxOjN9dI0uAiBemAfKvGI/snbXE3PggKYIvWUQmW7ddXR37KxG8u96bg==", "ar": [{"ac": "GET", "re": "/api/v1/resources/601ad929cc5e1504df125b04"}], "nb": 1674216716, "na": 1674226716}
+x-subject-token: 0dc74737-ef3f-4427-b83c-8cecb2d6a0fb
+Content-Length: 159
+
+{"token": "0dc74737-ef3f-4427-b83c-8cecb2d6a0fb", "ac": "GET", "de": "https://bse.h2020-demeter-cloud.eu:443", "re": "/api/BSE/service/affectionate_zhukovsky"}
+
+2023-01-20 12:11:59: <-----------Response-----------
+Status code:200
+
+Server: BaseHTTP/0.6 Python/3.6.9
+Date: Fri, 20 Jan 2023 12:11:59 GMT
+
+{
+   "id": "3vmg8gejf8bmtlrgm2orfes7i0",
+   "ii": 1674215719,
+   "is": "capabilitymanager@odins.es",
+   "su": "e36f9c5c-abde-40f0-9339-767eca27693e_5f8715cd-e9d5-4690-ae25-340ac500cdc1",
+   "de": "https://bse.h2020-demeter-cloud.eu:443",
+   "si": "MEUCIQCX8rApCKqvtu5sZ5U4MoZWELyLhvPVnTKUOQOE1yoi8gIgO/U9ok2ILehvz+anh9hNQYrHcfgsUGISzgnNgdq06bM=",
+   "ar": [
+      {
+         "ac": "GET",
+         "re": "/api/BSE/service/affectionate_zhukovsky"
+      }
+   ],
+   "nb": 1674216719,
+   "na": 1674226719
+}
+
+2023-01-20 12:12:00: -----------Request----------->
+GET https://bse.h2020-demeter-cloud.eu:443/api/BSE/service/affectionate_zhukovsky
+
+User-Agent: python-requests/2.25.1
+Accept-Encoding: gzip, deflate
+Accept: application/json
+Connection: keep-alive
+content-type: application/json
+x-auth-token: {"id": "3vmg8gejf8bmtlrgm2orfes7i0", "ii": 1674215719, "is": "capabilitymanager@odins.es", "su": "e36f9c5c-abde-40f0-9339-767eca27693e_5f8715cd-e9d5-4690-ae25-340ac500cdc1", "de": "https://bse.h2020-demeter-cloud.eu:443", "si": "MEUCIQCX8rApCKqvtu5sZ5U4MoZWELyLhvPVnTKUOQOE1yoi8gIgO/U9ok2ILehvz+anh9hNQYrHcfgsUGISzgnNgdq06bM=", "ar": [{"ac": "GET", "re": "/api/BSE/service/affectionate_zhukovsky"}], "nb": 1674216719, "na": 1674226719}
+x-subject-token: 0dc74737-ef3f-4427-b83c-8cecb2d6a0fb
+
+None
+
+2023-01-20 12:12:00: <-----------Response-----------
+Status code:200
+
+Server: nginx/1.19.0
+Date: Fri, 20 Jan 2023 12:12:00 GMT
+Content-Type: application/json
+Content-Length: 825
+Connection: keep-alive
+Vary: Accept, Cookie
+Allow: GET, HEAD, OPTIONS
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=3600; includeSubDomains; preload
+X-Content-Type-Options: nosniff
+
+[
+   {
+      "id": "DEMETER:BSE-ID:(affectionate_zhukovsky)-3ad47d22-0d05-49e8-8493-500489d0c39e",
+      "service_name": "affectionate_zhukovsky",
+      "deh_id": "601ad929cc5e1504df125b04",
+      "address": "0.0.0.1",
+      "port": 0,
+      "tags": [
+         "latest"
+      ],
+      "meta": {
+         "applicationCategory": "string",
+         "description": "string",
+         "version": 0.0,
+         "featureList": [
+            "string"
+         ],
+         "dataEncryption": true,
+         "authentication": true,
+         "conditionsOfAccess": "string",
+         "timeRequired": 0,
+         "quota": "string",
+         "offers": 0.0,
+         "TermsOfService": "string",
+         "usageInfo": "string",
+         "provider": "string",
+         "spatial": "string",
+         "aggregateRating": 0,
+         "apiModel": {
+            "dataProtocol": "REST",
+            "baseUrl": "string",
+            "relativePath": "string",
+            "method": "GET",
+            "URLRequiredParams": {},
+            "URLOptionalParams": {},
+            "dataParams": {},
+            "successResponse": [
+               0
+            ],
+            "errorResponse": [
+               0
+            ],
+            "sampleCall": "string",
+            "topic": "string",
+            "payloadFormat": "JSON",
+            "payloadRepresentation": {}
+         }
+      }
+   }
+]
+
+2023-01-20 12:12:40: -----------Request----------->
+POST https://acs.bse.h2020-demeter-cloud.eu:3030/
+
+User-Agent: python-requests/2.25.1
+Accept-Encoding: gzip, deflate
+Accept: */*
+Connection: keep-alive
+content-type: application/json
+Content-Length: 141
+
+{"token": "0dc74737-ef3f-4427-b83c-8cecb2d6a0fb", "ac": "POST", "de": "https://acs.bse.h2020-demeter-cloud.eu:1029", "re": "/api/v1/metrics"}
+
+2023-01-20 12:12:40: <-----------Response-----------
+Status code:200
+
+Server: BaseHTTP/0.6 Python/3.6.9
+Date: Fri, 20 Jan 2023 12:12:40 GMT
+
+{
+   "id": "4fqud0gec6p53363vmeb5mod3f",
+   "ii": 1674215760,
+   "is": "capabilitymanager@odins.es",
+   "su": "26b690e3-95a2-4e48-b465-c5f74742c624_68090e51-6ece-4c46-a917-f9e943cb12bc",
+   "de": "https://acs.bse.h2020-demeter-cloud.eu:1029",
+   "si": "MEYCIQCu94/zY5DAOtSityPbeEvN1aB90lLWJXqd+0BOTHGF4AIhALro5E+wyOcVoLOV50K/qqbLJ4T5LpSzYVF8v0Zs1LwO",
+   "ar": [
+      {
+         "ac": "POST",
+         "re": "/api/v1/metrics"
+      }
+   ],
+   "nb": 1674216760,
+   "na": 1674226760
+}
+

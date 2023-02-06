@@ -1,0 +1,140 @@
+/*"Case 1: id will be deh_id if the resource is already registered to RRM"
+Case 2: If resource is not registered to RRM, id will be resource name i.e., container name*/
+
+[{"deh_id":
+        {  "ResourceID" : "<< type: string >> Container ID ",
+        "ResourceName" : "<< type: string >> Container Name ",
+        "HostName" : "<< type: string >> Resource/Container Host Name ",
+        "IP" : "<< type: string >> IPV4 Address ",
+        "RRM_ID" : "<< type: string >> RRM Resource Registration ID ",
+        "BSE_ID" : "<< type: string >> BSE Resource Registration ID ",
+        "Uptime":"<< type: int >> Uptime in Seconds >>",
+        "Volume":{"cpu":"<< type: float >> CPU Percentage Utilization >>",
+                  "mem":"<< type: float >> Memory Percentage Utilization >>"},
+        "Info" : "<< type: dict >> Other Basic info like Container ID, Hostname, Status, Start & Finish time ",
+        "Status" : "<< type: string >> Status of container Running or Exited "}
+        }
+]
+
+/* Test Data */
+{
+  "605f580337801e241cf995ec": {
+    "BSE_ID": "DEMETER:BSE-ID:(estimate-animal-welfare-condition9)-9eb2face-45a4-416f-8241-dd8a33cc74cb",
+    "HostName": "9c84b82b1e3f",
+    "IP": "172.17.0.22",
+    "RRM_ID": "605f580337801e241cf995ec",
+    "ResourceID": "9c84b82b1e3f2a4517161b39710275be2dffecd74e934171f090e2c10ce10388",
+    "ResourceName": "estimate-animal-welfare-condition9",
+    "ServiceID": "",
+    "Uptime": 428457,
+    "Volume": {
+      "cpu": {
+        "cpu_percent": 0.07610460784313726,
+        "cpu_stats": {
+          "cpu_usage": {
+            "percpu_usage": [
+              98684140988,
+              100850488718,
+              101182150986,
+              99365285059
+            ],
+            "total_usage": 400082065751,
+            "usage_in_kernelmode": 160100000000,
+            "usage_in_usermode": 195890000000
+          },
+          "online_cpus": 4,
+          "system_cpu_usage": 89341210230000000,
+          "throttling_data": {
+            "periods": 0,
+            "throttled_periods": 0,
+            "throttled_time": 0
+          }
+        },
+        "precpu_stats": {
+          "cpu_usage": {
+            "percpu_usage": [
+              98683938352,
+              100850488718,
+              101181577355,
+              99365285059
+            ],
+            "total_usage": 400081289484,
+            "usage_in_kernelmode": 160100000000,
+            "usage_in_usermode": 195890000000
+          },
+          "online_cpus": 4,
+          "system_cpu_usage": 89341206150000000,
+          "throttling_data": {
+            "periods": 0,
+            "throttled_periods": 0,
+            "throttled_time": 0
+          }
+        }
+      },
+      "mem": {
+        "mem_percent": 2.987636866289207,
+        "memory_stats": {
+          "limit": 6234546176,
+          "max_usage": 274284544,
+          "stats": {
+            "active_anon": 91013120,
+            "active_file": 77824,
+            "cache": 253952,
+            "dirty": 0,
+            "hierarchical_memory_limit": 9223372036854772000,
+            "hierarchical_memsw_limit": 0,
+            "inactive_anon": 91189248,
+            "inactive_file": 126976,
+            "mapped_file": 270336,
+            "pgfault": 1119129,
+            "pgmajfault": 35046,
+            "pgpgin": 435666,
+            "pgpgout": 391159,
+            "rss": 182521856,
+            "rss_huge": 0,
+            "total_active_anon": 91013120,
+            "total_active_file": 77824,
+            "total_cache": 253952,
+            "total_dirty": 0,
+            "total_inactive_anon": 91189248,
+            "total_inactive_file": 126976,
+            "total_mapped_file": 270336,
+            "total_pgfault": 1119129,
+            "total_pgmajfault": 35046,
+            "total_pgpgin": 435666,
+            "total_pgpgout": 391159,
+            "total_rss": 182521856,
+            "total_rss_huge": 0,
+            "total_unevictable": 0,
+            "total_writeback": 135168,
+            "unevictable": 0,
+            "writeback": 135168
+          },
+          "usage": 186265600
+        }
+      }
+    },
+    "info": {
+      "container_id": "9c84b82b1e3f2a4517161b39710275be2dffecd74e934171f090e2c10ce10388",
+      "hostname": "9c84b82b1e3f",
+      "ip": "172.17.0.22",
+      "state": {
+        "Dead": false,
+        "Error": "",
+        "ExitCode": 0,
+        "FinishedAt": "0001-01-01T00:00:00Z",
+        "OOMKilled": false,
+        "Paused": false,
+        "Pid": 251254,
+        "Restarting": false,
+        "Running": true,
+        "StartedAt": "2021-03-27T16:02:41.819820345Z",
+        "Status": "running"
+      },
+      "status": "running",
+      "uptime": 428457
+    },
+    "last_updated": "2021-04-01 15:03:27 UTC+0000",
+    "status": "running"
+  }
+}

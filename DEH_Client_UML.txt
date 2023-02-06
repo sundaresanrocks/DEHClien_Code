@@ -1,0 +1,100 @@
+@startuml
+participant User
+participant "Docker Host"
+participant "Docker Image Registry"
+participant ACS
+participant "DEH RRM"
+participant "DEH RRM"
+
+group Deploy DEH Service Container [Successful Case]
+ User -> "Docker Host": Request - Docker Pull Image
+ activate "Docker Host"
+ "Docker Host" -> "Docker Image Registry" : Request - Pull Docker Image From Registry.
+ activate "Docker Image Registry"
+ "Docker Image Registry" --> "Docker Host": Response - Pull Docker Image Success.
+ deactivate "Docker Image Registry"
+ "Docker Host" --> User: Response - Docker Image ID.
+ User -> "Docker Host" : Request - Docker Start Container/ Instance Of The Image.
+ "Docker Host" -> "Docker Host" : "Docker Create & Start Container".
+ "Docker Host" --> User: Response - Docker Container ID.
+ deactivate "Docker Host"
+else Error
+    "Docker Host" --> User: Docker Error (Docker Image Not Found In Registry/ \nFailed To Deploy As Docker Container).
+end
+
+group Register Resource With RRM [Successful Case]
+    User -> ACS: Authentication Request.
+    activate ACS
+    ACS --> User: Authentication Accepted.
+    deactivate ACS
+    User -> "DEH RRM": Request - Register Resource With RRM.
+    activate "DEH RRM"
+    "DEH RRM" -> "DEH RRM": Registration Process \nGenerate UID For Resource Registered.
+    "DEH RRM" --> User: Response: Confirm Registration, &\nUID for Registered Resource.
+    deactivate "DEH RRM"
+else Error
+    ACS --> User: Not Authorized.
+
+end
+
+
+group Register Resource With BSE [Successful Case]
+    User -> ACS: Authentication Request.
+    activate ACS
+    ACS --> User: Authentication Accepted.
+    deactivate ACS
+    User -> BSE: Request - Register Resource With BSE.
+    activate BSE
+    BSE -> BSE: Registration Process \nGenerate BSE_ID For Resource Registered.
+    BSE --> User: Response: Confirm Registration, &\nBSE_ID for Registered Resource.
+    deactivate BSE
+else Error
+    ACS --> User: Not Authorized
+end
+
+Create DEHClient
+    User -> DEHClient : Invoke DEH Client API,GET Request -\nGet Resource Consumption Metrics With UID As Parameter.
+group RRM: Get Registration Info Associated With UID [Successful Case]
+
+    DEHClient -> ACS: Authentication Request.
+    activate ACS
+    ACS --> DEHClient: Authentication Accepted.
+    deactivate ACS
+    DEHClient -> "DEH RRM": Request - Resource Registration Info For UID.
+    activate "DEH RRM"
+    "DEH RRM" -> "DEH RRM": Get Registration Info.
+    "DEH RRM" --> DEHClient: Response - Registration Info With Resource Name.
+    deactivate "DEH RRM"
+
+else Error
+    ACS --> DEHClient: Not Authorized Or UID Not Exists.
+
+end
+
+group BSE: Get Registration Info Associated With UID [Successful Case]
+    DEHClient -> ACS: Authentication Request
+    activate ACS
+    ACS --> DEHClient: Authentication Accepted
+    deactivate ACS
+    DEHClient -> BSE: Request - Resource Registration Info For UID.
+    activate BSE
+    BSE -> BSE: Get Registration Info With Actual Resource Name.
+    BSE --> DEHClient: Response - Registration Info With Resource Name.
+    deactivate BSE
+else Error
+    ACS --> DEHClient: Not Authorized Or UID Not Exists.
+end
+
+
+group Resource Discovery & Generate Metrics [Successful Case]
+     DEHClient -> "Docker Host": Request - Generate Resource Consumption Metrics For A Given Resource.
+     activate "Docker Host"
+    "Docker Host" -> "Docker Host": Identify If The Resource/Container By Name Is Deploy On Docker Host.
+    "Docker Host" --> DEHClient: Response - Runtime Metrics Data Of The Container.
+    deactivate "Docker Host"
+else ERROR
+    "Docker Host" --> DEHClient: Response - No Container By Name Is Deployed On Docker Host.
+end
+
+DEHClient --> User: Response - Resource Consumption Metrics For The Resource Requested,\nWith Associated UID & BSE_ID.
+@enduml

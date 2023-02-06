@@ -1,0 +1,835 @@
+
+0892339016
+*******************************
+** metrics_updater - Service **
+*******************************
+>> Created a new service metrics_updater: This will be responsible for updating the metrics data either to
+    DB or
+    Invoke DEH RRM Consumer API to post or
+    Both
+
+>> metrics_updater service: Cascaded most of the DB operations (read, write & update) to metrics_updater service.
+So, this would not impact the performance of metrics_handler service.
+
+>> Interact or interface with DB & RRM consumer.
+
+>> My idea is,
+Any further requirement change in the data model or metrics data consumer, should / will be done only in metrics_updater
+
+**************************************
+** Integration : BSE & RRM Progress **
+**************************************
+>> Discuss on new changes with RRM, possible future changes
+new header user-id, this could change in future
+change in request data model of RRM resource registration request
+
+status : Status of a resource. Available values: 1 - Published, 2 - Not published, 3 - Draft
+maturityLevel : integer
+accessibility : Accessibility of a resource. Available values: 0 - Public, 1 - Private, 2 - Restricted
+
+at present, resource name is considered as unique for referencing resources across BSE, DEH Client & RRM,
+Future BSE ID will be unique reference across DEH
+
+>> Chek for BSE registration by name
+curl -X GET "http://10.0.10.125:5000/api/v1.0/DEHClientEnabler/DEHBSE/bse_get_running_services?service_name=dehclient_latest2"
+
+>> Check for RRM registration by name
+curl -X GET "http://10.0.10.125:5000/api/v1.0/DEHClientEnabler/DEHEnablerHub/resources/search?name=dehclient_latest2"
+
+>> Register resource to RRM
+curl -i -H "Content-Type: application/json" -X POST -d '{"id":"dehclient_latest2"}'
+http://localhost:5000/api/v1.0/DEHClientEnabler/DEHEnablerHub/rrm/save_deh_resource
+
+Response Already Registered resource:
+response : {"message":"Resource with name dehclient_latest2 already registered to DEH Enabler Hub RRM"}
+
+New resource:
+{
+    "uid": "602a6dd137801e241cf995c1", "name": "dehclient_latest2", "type": "string",
+    "category": ["string"], "description": "string", "endpoint": "string",
+    "status": 1,
+    "version": "string",
+    "maturityLevel": 1,
+    "owner": "32194dbf-03de-4ac5-a91b-c959ceb97358",
+    "tags": ["string"], "attachment": null, "rating": 0,
+    "localisation": [{"x": 0, "y": 0, "coordinates": [ 0, 0 ], "type": "Point" } ],
+    "accessibility": 0,
+    "createAt": "2021-02-15T12:49:21.525",
+    "lastUpdate": "2021-02-15T12:49:21.525",
+    "dependencies": [ "string" ],
+    "accessControlPolicies": [ "string" ],
+    "url": "string",
+    "billingInformation": [],
+    "downloadsHistory": {}
+}
+
+*********************
+** End to End flow **
+*********************
+>> Integration : BSE & RRM Progress
+Completed integrating BSE & RRM resources with DEH Client.
+Had discussing with Makor and incorporated changes with accessing RRM resources.
+Thank you Marko for your support and enable us to seamlessly and quick integration of RRM with client
+
+    At present, resource name is considered as unique for referencing resources across BSE, DEH Client & RRM,
+Future BSE ID will be unique reference across DEH.
+
+>> GitLabs: DEH Client
+https://gitlab.com/demeterproject/wp3/demeterenablerhub/dehclient
+
+>> Image updated in the GitLabs registry
+Pull Image
+sudo docker --tlsverify --tlscacert=../docker_test/ca.pem --tlscert=../docker_test/cert.pem --tlskey=../docker_test/key.pem -H=demeterdev:2376 image pull registry.gitlab.com/demeterproject/wp3/demeterenablerhub/dehclient:latest
+
+>> Create a new resource:
+sudo docker --tlsverify --tlscacert=../docker_test/ca.pem --tlscert=../docker_test/cert.pem --tlskey=../docker_test/key.pem -H=demeterdev:2376 create --name dehclient_latest3 -e USER="sundaresanrocks@gmail.com" -e PASS="Brain@123" -e HOST_URL="https://10.0.10.125:2376/" dehclient_test:latest
+
+>> Copy cert files for secure connect to DockerHost:
+sudo docker --tlsverify --tlscacert=../docker_test/ca.pem --tlscert=../docker_test/cert.pem --tlskey=../docker_test/key.pem -H=demeterdev:2376 cp ./ca.pem dehclient_latest3:/app/DEHClientEnabler/resource_monitor/
+
+sudo docker --tlsverify --tlscacert=../docker_test/ca.pem --tlscert=../docker_test/cert.pem --tlskey=../docker_test/key.pem -H=demeterdev:2376 cp ./key.pem dehclient_latest3:/app/DEHClientEnabler/resource_monitor/
+
+sudo docker --tlsverify --tlscacert=../docker_test/ca.pem --tlscert=../docker_test/cert.pem --tlskey=../docker_test/key.pem -H=demeterdev:2376 cp ./cert.pem dehclient_latest3:/app/DEHClientEnabler/resource_monitor/
+
+>> Start the resource
+sudo docker --tlsverify --tlscacert=../docker_test/ca.pem --tlscert=../docker_test/cert.pem --tlskey=../docker_test/key.pem -H=demeterdev:2376 start -i dehclient_latest3
+
+# TODO: updates contributers to Support team
+
+Workaround
+User-id used in each request to RRM is a temporary solution, the communication with ACS will be updated.
+(Attention: in the next release these change could affect the client integration with RRM APIs) \textcolor{red}{ \text{(Attention: in the next release these change could affect the client integration with RRM APIs)}\ } (Attention: in the next release these change could affect the client integration with RRM APIs) 
+
+Release
+V1.0
+
+License
+
+roadmap
+
+Bug Tracker:
+
+24th Feb : DEMETER WP3 call
+****************************
+Last week presented detailed Demo on Approach & Development Antiono & Marko and we agreed on the approach.
+- Completed integration of DEH Client with BSE & RRM.
+- Now Client can interact with BSE & RRM for resource registration.
+- Agreed on the Data Model of metrics reporting back to DEH.
+
+In progress
+Myself, Antonio and Marko are working on integrating Client with DEH,
+Working on incorporating the change in flow for registration & including deh_id
+
+
+24th Feb Discussion Points : Stevan, Antonio & Marko
+*****************************************************
+Change in flow:
+% DEH Client , discover resources hosted on Docker Host.
+% Client attempt to register resource in DEH:
+    - Case 1: If registered already, get deh_id.
+    - Case 2: If not registered, register and get deh_id.
+% Client attempts to register resource in BSE along with deh_id:
+    - Case 1: If registered already.
+    - Case 2: If not registered, automatically generate BSE attributes and register.
+% Generate metrics and update local db, periodically send update to DEH via RRM consumer API.
+Take away from this :
+DEH Client will be responsible for resource discovery and resource registration to BSE.
+
+Questioners:
+> Which service is responsible for resource(Container) discovery on a specific host Docker Host ?
+    Right now pilots are manually doing this.
+> How are the attributes for BSE registration eg meta fields generated ?
+    Same answer as above
+> In case of multiple docker hosts / resource hosts
+Resource registration
+Docker_Host1:
+<<DEH Client>>/register?name=<<Docker_Host1_Resource_name>>
+
+Docker_Host2:
+<<DEH Client>>/register?name=<<Docker_Host2_Resource_name>>
+
+
+Why BSE?
+DEH was originally proposed to run on Cloud,
+to have dev access the data on on Prem/locally
+
+BSE ---> While running
+DEH RRM ---> Before
+
+DEH Client --> Local instance
+
+>> Next meeting with Antonio deliverables:
+*******************************************
+DEH Client:
+- start -name="Pilot 4.2 Consumer Awareness: Milk Quality and Animal Welfare Tracking - AIM Model"
+        --> verify (DEH + BSE) + auto-registration resources (DEH + BSE) + tracking (resource consumption).
+- start -uid=602d41eccc5e1504df125b07
+        --> verify (DEH + BSE) + tracking (resource consumption).
+
+DEH Model
+- name: Pilot 4.2 Consumer Awareness: Milk Quality and Animal Welfare Tracking - AIM Model
+
+BSE Model
+- service_name: Pilot 4.2 Consumer Awareness: Milk Quality and Animal Welfare Tracking - AIM Model
+
+My Approach for auto-registration:
+Resource name (container instance) cannot have space or certain special characters.couple of ways to over come this,
+    Introduce a naming convention/ nomenclature for name fields RRM registry.
+    Have a dedicated field to represent the resource name.
+    Instruct pilots to create with same name as mentioned above,
+    Future we will have look for a way to automatically create resource. This can be achieved via docker engine api
+Introduce a configurable switch to control registration with RRM & BSE - So adopt to requirement change.
+Event Create: Register resource to RRM alone.
+Event Start : Register resource to BSE alone.
+(Note : Any new Resource start will always invoke create event,
+so we are assured the resource data is always persisted to RRM).
+
+
+self-registration resources configurable (yes/no) - configured to be optional now
+************************************************************************************
+Assumptions: Pilot actions
+>> Register resource manually/RRM API Or DEH Dashboard with RRM , get unique uid (deh_id).
+------- >> Manually deploy resources on DEH Docker Host.
+------- Container name / Resource name --> $Docker_HostName + "_" + deh_id.
+------- >> Manually update name of the resource to be same as the uid in RRM.
+------- Pilot can also use the DEHClient endpoint to do so.
+>> Pilot run DEHClient locally.
+>> Track resource consumption of the deployed resources using resource name or uid(deh_id).
+Changes made to the DEH Client
+    DEH Client now accepts new parameter for getting resource metrics via uid (deh_id).
+    --- Other accepted parameters resource id or name (container name / id)
+
+>> Case 1: If self-registration = false; get resource consumption by uid
+(deh_id + docker container name)
+1) Start container via deh_id (manual) - (as it is optional for BSE it may not be available)
+   Check 1:     1.1) Check if the resource exists in DEH .. if not send an error on the docker console
+                Response : {"message":"Resource with uid 6033966037801e241cf995d0 not registered with DEH RRM,
+                Please register manually with RRM to generate metrics."}
+¬¬ Implemented ¬¬
+2) Start tracking resource consumption
+                1.1) If resource/uid (deh_id) found registered in RRM, get container name/ resource name.
+   Check 2:     1.2) If resource with name doesn't exists on DEH / Docker Host
+                    Current Response : {"message":"Resource with name not hosted on DEH Host: $HostName"}
+                    Future : User/Pilot provided with option to create resource automatically on demand.
+                1.3) If resource with name exists, generate Resource consumption metrics of the resource.
+¬¬ Implemented ¬¬
+
+>> Case 2: If self-registration = true; get resource consumption by uid
+1) Start container via deh_id (manual):
+                1.1) Check if the resource exists in DEH .. if not send an warning on the docker console log
+                --- 1.2.1) If not create resource on DEH.
+                --- 1.2.2) If already registered skip registration.
+                1.2) DEH Client start container using DEH id, after container is running.
+                1.3.1) Check if the resource exists in BSE .. if not send an warning on the docker console log
+                1.3.2) If already registered skip registration.
+                1.4) If not create resource on BSE
+2) Start tracking resource consumption == case1
+
+Note : in addition we have implemented filter by name option for getting resource name
+main : Resource consumption, Future : Scope can be extened to automatically create resource in BSE & RRM
+ DEH Client arch, features, example of data DEH client can extract(descriptive - smart art & ex^Cple Json) & Pocess
+
+
+DEH Client, RSC on pilot side
+2 modality: self-reg = false
+            self-reg = true
+
+Provider Antonio
+>> 1 Resource on DEH + 2 DEH Client Istance + DEH Dashbaord different visualisation for each instance of resrouce
+121212edrf --> Milk quality Prediction --- 1 Server --> CPU usage .. DEH Client Instance 1
+121212edrf --> Milk quality Prediction --- 2 Server --> CPU usage .. DEH Client Instance 2
+
+>> 2 Resource on DEH + 2 DEH Client Istance + DEH Dashbaord different visualisation for each resource
+121212edrf --> Animal Welfare Prediction Resoure 1 --- Server 1 --> CPU usage .. DEH Client Instance 1
+133412edrf --> Milk  quality Prediction Resoure 2 --- Server 2 --> CPU usage .. DEH Client Instance 2
+
+
+Tests: Registered in RRM not hosted on Docker Host
+curl -X GET "http://localhost:5000/api/v1.0/DEHClientEnabler/ResourceConsumption/individual/metrics?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoic3VuZGFyIiwiZXhwIjoxNjE0NzgxMjkwfQ.rIRcK7_TqbK9q0Kv24L0kfALFbxkYg0BGeIhACooiD0&uid=6033966037801e241cf995d9"
+
+
+###################
+## WorkShop Demo ##
+###################
+
+
+Pull Image:
+sudo docker image pull registry.gitlab.com/demeterproject/wp3/demeterenablerhub/dehclient:latest
+
+Create Container:
+sudo docker create --name demeter_client_latest1 -e USER="sundaresanrocks@gmail.com" -e PASS="Brain@123" -e HOST_URL="https://10.0.10.132:2376/" registry.gitlab.com/demeterproject/wp3/demeterenablerhub/dehclient
+
+Copy Client Certificates to DEH Client:
+sudo docker cp ca.pem demeter_client_latest1:/app/DEHClientEnabler/resource_monitor
+sudo docker cp ./key.pem demeter_client_latest1:/app/DEHClientEnabler/resource_monitor
+sudo docker cp ./cert.pem demeter_client_latest1:/app/DEHClientEnabler/resource_monitor
+
+Start Container:
+
+
+*****************************
+* Meeting : 18th March 2021 *
+*****************************
+
+> If GET metrics by name: auto-register Included a feature to register to resource to RRM along with BSE(ppt).
+
+> Implemented a new GET method, which will list all the resources. Why this will be useful?
+For example, user or pilot creates a resources and couldn't remeber the name
+
+curl -X GET "http://localhost:5000/api/v1.0/DEHClientEnabler/ResourceConsumption/running_containers?name=demeter" | json
+?status=running
+?status=all
+equivalent of : sudo docker --tlsverify --tlscacert=../docker_test/ca.pem --tlscert=../docker_test/cert.pem --tlskey=../docker_test/key.pem -H=demeterdev:2376 ps -f status=running
+
+implemented :
+Discover Resources by : name
+curl -X GET "http://localhost:5000/api/v1/DEHClientEnabler/ResourceConsumption/get_resources_filter?name="
+
+Discover Resource by : status
+curl -X GET "http://localhost:5000/api/v1/DEHClientEnabler/ResourceConsumption/get_resources_filter?status=running"
+
+Discover Resources based on ancestor: image
+curl -X GET "http://localhost:5000/api/v1/DEHClientEnabler/ResourceConsumption/get_resources_filter?ancestor=demeterengteam/estimate-animal-welfare-condition:candidate"
+<image-name>[:tag] or imageid
+
+> Created .env file which will have all the relevant parameters,
+so pilots can choose from already configured cloud instance of BSE & RRM or use their own instances.
+Customizable to an extent of individual components methods
+
+> Performance improvement,
+    Optimized code: Reduce number of time ACS token requests are made.
+    Implementing a caching mechanism,(Future)
+        > ACS tokens will be generated only when its required ie only when the current ones are expired.
+
+> Performing regression tests, once all tests passed i will build an new image and upload to registry.
+> Updating the document in gitlabs.
+
+> Our plans for Workshop
+
+
+***********************************
+Meeting with Steven: 24/03/21
+***********************************
+Change in flow from : BSE --> DEHClient --> RRM
+to RRM <--> DEHClient --> BSE
+
+unique identifier of resource : deh_id ie uid
+
+> Get RCM by uid or name
+
+Modality for generating RCM
+if uid & auto-registration= true, auto-register to BSE, get RCM
+if uid & auto-registration= false, get RCM
+
+If name  auto-registration= true,  auto-register to BSE & RRM , get RMC
+If name  auto-registration= false,  get RMC
+
+
+***************************************
+Meeting with Antonio & Marko: 07/04/21
+***************************************
+
+> Discuss on format of metrics data to be sent to DEH.
+Approach 1:
+¬¬¬¬¬¬¬¬¬¬¬¬
+Send data continuously @ regular intervals to DEH.
+
+Approach 2:
+¬¬¬¬¬¬¬¬¬¬¬¬
+Send cumulative date once an hour to DEH.eg
+Say example frequency of sending data to RRM is for every 1hr & DEH Client
+    is configured to capture metrics every second , in total 360 records
+
+option 1: Send all the 360 records in the format as shown below
+or
+option 2: Send say top 10 or 20 highest percentage utilization
+
+Data Format:
+unit_of_measure = 1s
+timestamp=1h
+internal configuration to limit the number of requests
+24/3 --> per day
+send email to antonio with git labs
+{
+  "_id": "9c84b82b1e3f2a4517161b39710275be2dffecd74e934171f090e2c10ce10388",
+  "uptime": 428457,
+  "hostname": "0c9ff4f3419b",
+  "ip": "172.17.0.22",
+  "image": "estimate-animal-welfare-condition",
+  "BSE_ID": "DEMETER:BSE-ID:(estimate-animal-welfare-condition9)-9eb2face-45a4-416f-8241-dd8a33cc74cb",
+  "RRM_ID": "605f580337801e241cf995ec",
+  "lastupdated": "2021-04-07 14:34:56 UTC+0000",
+  "cpu_percent": [
+    {
+      "time_stamp": "2021-04-07 14:48:54 UTC+0000",
+      "cpu_percent": 1.2174489775561097
+    },
+    {
+      "time_stamp": "2021-04-07 15:11:13 UTC+0000",
+      "cpu_percent": 1.2167604739336493
+    }
+                ]
+  "mem_percent": [
+    {
+      "time_stamp": "2021-04-07 14:34:56 UTC+0000",
+      "cpu_percent": 3.2411014738789543
+    },
+    {
+      "time_stamp": "2021-04-07 15:25:06 UTC+0000",
+      "cpu_percent": 3.3027923153840795
+    }
+                ]
+    ]
+}
+
+This data can be feed to any model to display as stats or chart
+
+
+Implement
+unit_of_measure=s
+timestamp=10
+
+*********************************************
+** Meeting with Antonio & Marko : 14/04/21 **
+*********************************************
+Development in progress, features including
+    Runtime configuration for capturing metrics - internally.
+    Runtime configuration for reporting metrics to DEH.
+    Order in which metrics will be sent to DEH.
+
+Updating the document for Module & Enabler Verification Template.
+
+*********************************************
+** Meeting with  : 21/04/21 **
+*********************************************
+>> Development:
+***************
+> Implemented a dedicated configuration file for runtime configuration.
+> Now we can capture & record Resource Consumption Metrics for all running resources : metrics collection
+> Now we can capture Resource events for all resources : metrics events
+
+> Made changes on look up for RRM & BSE ID while generating metrics:
+    > flow:
+        When requested for metrics
+
+
+*********************************************
+** Meeting with  Steven : 26/04/21 **
+*********************************************
+>> DEH Client Development:
+*********************************************
+> runtime.py:
+    Implemented a dedicated configuration file for runtime configuration.(This will be advanced config option)
+> Automatically capture & record Resource Consumption Metrics for all running resources : metrics collection
+> Automatically capture Resource events for all resources : events collection
+
+> Made changes on look up for RRM & BSE ID while generating metrics:
+    > Advantage : Performance improvement, check catch db instead of getting from RRM & BSE
+    > Flow: When requested for metrics, DEH Client check for internal DB from uid & bse_id
+    > In new resource ie not register, register the same and
+
+> Static Dashboard.(Draft)
+> Meeting with marko
+    Validate the RRM flow with marko.
+
+DEH Client video (04th may 2021) Duration 3 min
+
+Tomorrows discussion
+> Define mock up dash board.
+> Define data model (json).
+> Dashboard Local setup
+
+> Install npm
+> Install angular10.0.2 globally
+
+Flow:
+DEH Dashboard
+Dymer (because of ASC- dymer is a middleware)
+RRM
+
+Requirement:
+HTML & CSS (view) & TypeScript - controllers, services
+
+{
+ "RRM_ID": "605f580337801e241cf995ec",
+ "image": "estimate-animal-welfare-condition",
+ "hostname": "0c9ff4f3419b",
+ "ip": "172.17.0.22",
+ "lastupdated": "2021-04-07 14:34:56 UTC+0000",
+ "metrics": [
+    {"2021-04-07": {
+                   "cpu_percent" :
+                                {
+                                "average": 100,
+                                "highestPeak": 300,
+                                "lowestPeak": 100
+                                },
+                   "mem_percent" :
+                                {
+                                "average": 100,
+                                "highestPeak": 300,
+                                "lowestPeak": 100
+                                }
+              }
+    },
+        {"2021-04-08": {
+                   "cpu_percent" :
+                                {
+                                "average": 100,
+                                "highestPeak": 300,
+                                "lowestPeak": 100
+                                },
+                    "mem_percent" :
+                                {
+                                "average": 100,
+                                "highestPeak": 300,
+                                "lowestPeak": 100
+                                }
+              }
+    },
+        {"2021-04-09": {
+                   "cpu_percent" :
+                                {
+                                "average": 100,
+                                "highestPeak": 300,
+                                "lowestPeak": 100
+                                },
+                    "mem_percent" :
+                                {
+                                "average": 100,
+                                "highestPeak": 300,
+                                "lowestPeak": 100
+                                }
+              }
+    }
+             ]
+ }
+
+*********************************************
+** Meeting with Antonio & Marko : 14/04/21 **
+*********************************************
+Development in progress, features including
+    Runtime configuration for capturing metrics - internally.
+    Runtime configuration for reporting metrics to DEH.
+    Order in which metrics will be sent to DEH.
+
+Updating the document for Module & Enabler Verification Template.
+
+
+Before the Dashboard give information table about the resours running
+Like IP , RRM ID, Host name & Associated Docker Host
+
+Antonio will not be able to attend next telco.
+
+User level dashboard view (Admin, Pilot)
+
+
+
+
+
+Plans:  Deliverables 3.4
+#########################
+Note: 14th of june to 18th june -- marko PTO
+
+Data model from RRM : Defined
+RRM & DEH Dashboard Development : 31st may to 11th june
+RRM & DEH Client integration : 21st june to 25th june
+Testing Integration -  (Functionality & Integration): 28th june 30th june
+Install our solution on Demeter Cloud - 1st july 2nd july
+
+--  Integrated instance on Demeter Cloud : 28th june 30th june
+
+
+
+DEH Sync Up Meeting: 1st July 2021
+###################################
+> Made  adequate changes to send x-subject-token as parameter for all RRM requests.
+> Need data-model for register resource with RRM , this seems to have been changed.
+> How to identify resource registered by name, in this example below "name" is having space and doesnt look like
+name of the resource (eg demeterengteam/estimate-animal-welfare-condition:candidate)
+
+Case 1:    If register service (Docker Container)
+            "type": "service"
+Case 2:    If register resource (Docker Image)
+            "type": "component"
+
+       Request: {
+            "name": "Estimate Animal Welfare Condition",
+            "type": "component",
+            "category": [
+                "AI"
+            ],
+            "description": "Test latest after chanigng",
+            "endpoint": "https://www.google.com/",
+            ......
+
+       Response:
+
+> Manifest digest: sha256:84e88bfc704e1534a7c4404726b20eb2ec00017aebbb49affcabd0efcdf29a59
+Configuration digest: sha256:9be36c8a36a5519cdcf6c33bdeb6ec07b990009acfd205dac20bb2074ec8fc6d
+
+DEH Sync Up:
+############
+
+> Adding uid to the resources at runtime:
+echo "FROM demeterengteam/estimate-animal-welfare-condition:candidate" |
+sudo docker build --label uid="601ad929cc5e1504df125b04" -t "demeterengteam/estimate-animal-welfare-condition:candidate" -
+
+> Once this is done all the Containers instances will have the label referenced
+
+
+
+
+
+Make source code available to GitHub from Gitlab Open call winners
+
+
+1) Provide public source code repository
+
+2) Create DEH Client resource on DEH
+
+3) Update documentation
+
+4) Fill in Yannis template
+
+
+echo "FROM demeterengteam/estimate-animal-welfare-condition:candidate" |
+sudo docker build --label uid="60eee2af7b06376e88c83b5b" -t "demeterengteam/estimate-animal-welfare-condition:candidate" -
+
+
+echo "FROM demeter/capability-manager:latest" | sudo docker build --label uid="60eedf917b06376e88c83b5a" -t "demeter/capability-manager:latest -
+sudo docker run -d --name capability-manager-Test1 "demeter/capability-manager:latest"
+
+
+
+
+
+Note :
+******
+Include in documentation API methods with wget & curl.
+Create User Story : <<Requirement Mapping>>
+DEH (Consumer/Provider) --> Get Client  Enabler --> Set Client Enabler (Communication with Docker Host)
+
+Step 1: Download / Pull image (DEH Service Enablers) from repository
+Step 2: Download / Pull image (DEH Client Enablers) from repository
+.....
+Step N-1: Metrics on all DEH Service Containers sent to RRM Metrics API.
+Step N: Visualize metrics data in DEH DashBoard.
+
+Automated:
+**********
+New endpoints:
+> Pull image from the repository.
+POST
+curl -i -H "Content-Type: application/json" -X POST -d '{"image":"centos:latest"}'
+http://localhost:5000/api/v1.0/DEHClientEnabler/ResourceManagement/pull_docker_image
+
+> Validate UID
+add label & Validate UID
+
+> Run a container in background. (DEH Service Containers)
+POST:
+curl -i -H "Content-Type: application/json" -X POST -d '{"image":"portainer/portainer","container":"test_portainer_instance4"}'
+http://localhost:5000/api/v1.0/DEHClientEnabler/ResourceManagement/run_docker_container
+
+Manual
+
+
+
+############
+# Progress #
+############
+>
+curl -X GET "http://localhost:5003/api/v1/DEHClientEnabler/ResourceConsumption/metrics?status=running" | json
+
+{
+  "message": "No Docker Container/s is/are running on this Docker Host for monitoring,Please check and start some Containers before trying again."
+}
+
+> curl -X GET "http://localhost:5003/api/v1/DEHClientEnabler/ResourceConsumption/metrics?status=all" | json
+
+
+> Performance measure for enerating metrics for ~20 containers
+curl -X GET "http://localhost:5003/api/v1/DEHClientEnabler/ResourceConsumption/metrics?status=all" | json
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 16743  100 16743    0     0    348      0  0:00:48  0:00:47  0:00:01  3548
+
+
+DEH Client Progress discussion with Steven : 11th Aug 2021
+
+DEH Client operational layers :
+################################
+1> Communication with Docker Host over a secured channel.
+2> Interface with DEH RRM & BSE.
+3> Periodically update the resource consumption metrics data to DEH.
+4> DEH Dashboard metrics visualization.
+
+1> Communication with Docker Host over a secured channel.
+Proposed Changes:
+. This will be exposed as an configurable attribute. So, pilot will have an option choose between secure or unsecured
+channel.
+
+2> Interface with DEH RRM & BSE.
+. DEH Client provides users configurable option to automatically register resources with DEH RRM & BSE.
+. RRM UDI ie unique reference id is used identify and track resources across DEH.
+
+Challenge 1:
+There is no streamline process on how user can register the resource with RRM and validate if the resource
+is already registered.
+If persisted incorrect, this will lead to misinterpretation of UID corresponding to actual
+resource being tracked.
+
+Interim solution:
+Manually register Resource with DEH RRM.
+Map the RRM ID
+
+Resource 1: animal_welface:candidate
+c1
+c2
+c3
+
+3> Periodically update the resource consumption metrics data to DEH.
+.Discuss over the Metrics updater service implementation , code walk through &
+. Configurable via runtime.py
+    . Time interval over which metrics needs to be captured by DEH Client.
+    . Captured Data is written to local DB.
+    . Time interval over which metrics posted to RRM.
+
+. Memory management: Once the metrics for a specific resource is posted successfully to DEH RRM ,
+corresponding record in the internal DB will be cleaned up. Repeats everytime metrics is posted successfully.
+If failed to post over first attempt to post to RRM, the same will be retired later
+and record will not be deleted until a successful post is made to RRM
+
+. Performance Improvement: For concurrency and effective utilization of internal resources, Services are implemented
+over threadpool with predefined number if instances
+
+
+4> DEH Dashboard overview:
+
+
+DEH Client Future Proposal:
+#############################
+. With current Implementation of DEH Client , which serves DEH Dashboard to visualize metrics data.
+DEH Client needs to to set up manually & set up 1:1 against Docker Host, this is challenging in managing number of
+instance increases.
+
+. Future proposal is to Integrate DEH Client with DEH Dashboard and users have to just register their Docker Hosts to
+DEH Dashboard and the Dashboard will set up an virtual instance of DEH Client and starts to monitor.
+
+. Currently DEH Dashboard serves as a metrics
+
+curl -X GET "http://localhost:5003/api/v1/DEHClientEnabler/ResourceConsumption/get_container_logs?
+container=0c23da3d692d1fa1b59e1c0f5a7dae874ea600b4af13d391bb16b3c9a1d6f1a0&tail=20&pattern=2021-08-23"
+
+
+Exception Handling:
+#####################
+> Intermittent BSE error:
+2021-08-18 11:12:39,364 - DEHClientEnabler.metrics_handler - ERROR - Exception encountered interfacing with BSE exception : 'str' object has no attribute 'status_code', and BSE response An Http Error occurred:HTTPError('500 Server Error: Internal Server Error for url: https://vm1.test.h2020-demeter-cloud.eu:443/api/BSE/service/estimate-animal-welfare-condition-demo').
+2021-08-18 11:12:39,603 - DEHClientEnabler.APIWrapper - ERROR - Failed to get services list response code 500
+2021-08-18 11:12:39,603 - DEHClientEnabler.APIWrapper - INFO - Service: estimate-animal-welfare-condition-demo already registered to BSE.
+2021-08-18 11:12:39,603 - DEHClientEnabler.metrics_handler - ERROR - Exception encountered interfacing with BSE exception : 'str' object has no attribute 'status_code', and BSE response An Http Error occurred:HTTPError('500 Server Error: Internal Server Error for url: https://vm1.test.h2020-demeter-cloud.eu:443/api/BSE/service/estimate-animal-welfare-condition-demo').
+[2021-08-18 11:12:40,447] [timeloop] [INFO] Starting Timeloop..
+2021-08-18 11:12:40,455 - DEHClientEnabler.metric_updater - INFO - Metrics data updated successfully to local DB.
+[2021-08-18 11:12:41,464] [timeloop] [INFO] Starting Timeloop..
+
+
+> No containers running to monitor:
+2021-08-18 12:15:42,759 - DEHClientEnabler.metrics_handler - WARNING - No Docker Container/s is/are running on this Docker Host for monitoring, Please check and start some Containers before trying again.
+2021-08-18 12:15:42,760 - DEHClientEnabler.metric_updater - WARNING - No Docker Container/s is/are running on this Docker Host for monitoring, continuing to monitoring. To generate and start tracking metrics, Please start some Container/s instances of DEH resources with valid RRM registration(uid).
+2021-08-18 12:15:42,829 - DEHClientEnabler.metrics_handler - WARNING - No Docker Container/s is/are running on this Docker Host for monitoring, Please check and start some Containers before trying again.
+2021-08-18 12:15:42,829 - DEHClientEnabler.metric_updater - WARNING - No Docker Container/s is/are running on this Docker Host for monitoring, continuing to monitoring. To generate and start tracking metrics, Please start some Container/s instances of DEH resources with valid RRM registration(uid).
+
+
+> Docker Container stopped or exited in middle of monitoring:
+2021-08-18 12:17:29,427 - DEHClientEnabler.metric_updater - ERROR - Exception encountered, while monitoring container id 90e26e3637c0f7f662b2317f38ae0879b82dcd83705f7db88f259779fc9e6cce
+possible causes:Cause 1: Container under monitoring stopped while metrics generation was in progress. or .
+Cause 2: Metrics not generated properly ie certain fields not captured. Please check and start/ restart containers
+2021-08-18 12:17:29,427 - DEHClientEnabler.metric_updater - ERROR - Exception details : 'cpu_percent'.
+2021-08-18 12:17:29,427 - DEHClientEnabler.metric_updater - INFO - Metrics data updated successfully to local DB.
+[2021-08-18 12:17:29,436] [timeloop] [INFO] Starting Timeloop..
+2021-08-18 12:17:29,437 - DEHClientEnabler.metric_updater - ERROR - Exception encountered, while monitoring container id 90e26e3637c0f7f662b2317f38ae0879b82dcd83705f7db88f259779fc9e6cce possible causes:Cause 1: Container under monitoring stopped while metrics generation was in progress. or . Cause 2: Metrics not generated properly ie certain fields not captured. Please check and start/ restart containers
+2021-08-18 12:17:29,437 - DEHClientEnabler.metric_updater - ERROR - Exception details : 'cpu_percent'.
+2021-08-18 12:17:29,437 - DEHClientEnabler.metric_updater - INFO - Metrics data updated successfully to local DB.
+2021-08-18 12:17:39,431 - DEHClientEnabler.metrics_handler - WARNING - No Docker Container/s is/are running on this Docker Host for monitoring, Please check and start some Containers before trying again.
+2021-08-18 12:17:39,431 - DEHClientEnabler.metric_updater - WARNING - No Docker Container/s is/are running on this Docker Host for monitoring, continuing to monitoring. To generate and start tracking metrics, Please start some Container/s instances of DEH resources with valid RRM registration(uid).
+2021-08-18 12:17:39,441 - DEHClientEnabler.metrics_handler - WARNING - No Docker Container/s is/are running on this Docker Host for monitoring, Please check and start some Containers before trying again.
+2021-08-18 12:17:39,441 - DEHClientEnabler.metric_updater - WARNING - No Docker Container/s is/are running on this Docker Host for monitoring, continuing to monitoring. To generate and start tracking metrics, Please start some Container/s instances of DEH resources with valid RRM registration(uid).
+
+> If container not associated with uid , the same will not be persisted to DB & will not be sent to RRM
+2021-09-06 09:03:47,912 - DEHClientEnabler.metric_updater - WARNING - Skipping persisting metrics data to DB since the container id : 44bf3ae26d7ebdbd88aefb0057b9e0991d08b86ea796834dd515c750a691cac5 of DEH Resource : demeterengteam/estimate-animal-welfare-condition:candidate , is not associated with uid.
+[2021-09-06 09:03:47,914] [timeloop] [INFO] Starting Timeloop..
+[2021-09-06 09:03:47,916] [timeloop] [INFO] Starting Timeloop..
+2021-09-06 09:03:47,919 - DEHClientEnabler.metric_updater - WARNING - Skipping persisting metrics data to DB since the container id : 160ee7bf179ad4b2a70b2289754084e741d3062b42b1d01b736abe59c7c3536f of DEH Resource : demeterengteam/estimate-animal-welfare-condition:candidate , is not associated with uid.
+
+> Updated code change: Container metrics will not be captured in db untill the same is accociate with UID.
+So i case were containers are created before associating DEH resource (Image) with uid. The same will not be tracked
+
+
+> Are these issues fixed?
+Status code is 200 even for failure DEH RRM post metrics response
+
+> Run DEH Resource as a container
+curl -i -H "Content-Type: application/json" -X POST -d '{"image":"demeterengteam/estimate-animal-welfare-condition:candidate","name":"estimate-animal-welfare-condition_demo1","command":"catalin1a.sh run"}'
+http://localhost:5003/api/v1/DEHClientEnabler/ResourceManagement/container/run
+
+- invalid image:
+
+- already existing container name:
+
+"The Container by name estimate-animal-welfare-condition_demo1 already exists, Please use a different Container name"
+
+- valid image & container name:
+
+
+November 22nd 2021 : Discussion with Antonio.
+#######################
+>> Discuss with marko, for next steps on DEH Client - Brainstroming in progress.
+P1: Live Metrics capture & POST to RRM , DEH Dashboard
+
+>> Add to bi weekly telco for knowage - Done
+https://gitlab.com/demeterproject/wp4/visualizations/knowagefordashboards
+
+>> Access to WP4 gitlabs as Develper. - Done
+
+
+Nov 26th - Progress update - Steven:
+###########################
+
+> DEH Client:
+
+Delivered - Presentation & live demo to WP5 and Q&A session.
+Discuss with marko, for next steps on DEH Client - Brainstorming in progress.
+   P1: Live Metrics capture & POST to RRM , DEH Dashboard -
+        The code is already made configurable to address this.
+   Access token caching - Proposed a solution , will have to analyze.
+
+
+> Pilot 4.3
+    We will not have live data anytime soon, so we will have to work with Mock or sample data
+    Working on getting access to Data Source.
+    Recommded to use knowage -  Visualization :
+        Open Source Analytics And Business Intelligence
+        Allows us to combine traditional data and big data sources into valuable and
+        meaningful information.
+
+> Antonio requested for our Contribution for knowage - WP4
+
+    Add to bi weekly telco for knowage - Done
+    https://gitlab.com/demeterproject/wp4/visualizations/knowagefordashboards
+
+    Access to WP4 gitlabs as Develper. - Done
+
+
+
+
+
+
+
+
+
+
+
+
+

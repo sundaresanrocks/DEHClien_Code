@@ -1,0 +1,1 @@
+{"token": "1ee527c3-9bbd-4b89-b00a-a4967d0c2f38", "generated_date": "2021-09-29T20:20:15.523861", "expiry_date": "2021-09-29T20:20:15.449Z", "status_code": 201, "response": {"token": {"methods": ["password"], "expires_at": "2021-09-29T20:20:15.449Z"}, "idm_authorization_config": {"level": "advanced", "authzforce": false}}}

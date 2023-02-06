@@ -1,0 +1,43 @@
+version: "3.5"
+services:
+  dehclient-db:
+    image: mongo:4.2.8
+    container_name: dehclient-db
+    hostname: mongo
+    ports:
+      - ${MONGO_DB_EXPOSED_PORT}:${MONGO_DB_PORT}
+#        - '27018:27018'
+    volumes:
+      - dehclient_db:/data/db
+      - dehclient_db:/data/configdb
+
+  dehclient:
+    image: gitlab.h2020-demeter-cloud.eu:5050/demeterproject/wp3/demeterenablerhub/dehclient:v3
+    container_name: dehclient_ws01
+#    ports:
+#      - ${DEH_CLIENT_EXPOSED_SERVER_PORT}:${DEH_CLIENT_SERVER_PORT}
+
+#    ## In case you need to access BSE & RRM over a proxy
+#    networks:
+#      deh_c_network:
+#        ipv4_address : [[DEH Client IPV4 Address]]
+#
+#    environment:
+#      - 'httpProxy=http://proxy.server:port',
+#      - 'httpsProxy=http://proxy.server:port',
+#      - 'noProxy=localhost,127.0.0.1'
+
+    env_file:
+      - .env
+    depends_on:
+      - dehclient-db
+    volumes:
+      - ${PWD}/logs:/logs
+      # Note: This below section will be used only if secure_connection=True in .env file.
+      # Pleae ignore this if secure_connection=False in .env file
+      - /app/DEHClientEnabler/resource_monitor/ca.pem:/app/DEHClientEnabler/resource_monitor/ca.pem
+      - /app/DEHClientEnabler/resource_monitor/key.pem:/app/DEHClientEnabler/resource_monitor/key.pem
+      - /app/DEHClientEnabler/resource_monitor/cert.pem:/app/DEHClientEnabler/resource_monitor/cert.pem
+
+volumes:
+  dehclient_db:

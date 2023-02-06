@@ -1,0 +1,45 @@
+######################################################
+################### Events Schema ####################
+######################################################
+{
+  "namespace": "dojot.docker",
+  "domain": "container went down",
+  "additionalData": {
+    "event": "stop",
+    "container": "test_ubunthu9",
+    "image": "ubuntu:latest",
+    "exitCode": "0",
+    "id": "e4bf829973bffe77c5186bdee77376a4688ffb1b5216762694e3f63d1d24370f",
+    "imageId": "sha256:d70eaf7277eada08fca944de400e7e4dd97b1262c06ed2b1011500caa4decaf1"
+  },
+  "severity": "Major",
+  "eventTimestamp": "2020-12-23T19:18:52"
+}
+
+{
+  "_id": "e4bf829973bffe77c5186bdee77376a4688ffb1b5216762694e3f63d1d24370f"
+  "metadata":{
+                "namespace": "dojot.docker",
+                "domain": "container went down",
+                "additionalData": {
+                                    "event": "stop",
+                                    "container": "test_ubunthu9",
+                                    "image": "ubuntu:latest",
+                                    "exitCode": "0",
+                                    "id": "e4bf829973bffe77c5186bdee77376a4688ffb1b5216762694e3f63d1d24370f",
+                                    "imageId": "sha256:d70eaf7277eada08fca944de400e7e4dd97b1262c06ed2b1011500caa4decaf1"
+                                  },
+
+  "events":[{"eventTimestamp": "2020-12-23T19:18:52", "severity": "Major", "exitCode": "0", "domain": "container went down",
+            'scope': 'local', 'time': 1608754612, 'timeNano': 1608754612666744317},
+            {}
+            ]
+}
+
+#########################################################
+######### End To End : Pull image to RRM register #######
+#########################################################
+{"image": <<str>>,"start_resource" : {"image": <<str>>, "name": <<str>>, "command": <<str>>},
+"register_resource": {"id": <<str>>}}
+
+{"image": "demeterengteam/estimate-animal-welfare-condition:candidate","start_resource" : {"image": "demeterengteam/estimate-animal-welfare-condition:candidate","name": "automation_test_1", "command": "catalina.sh run"},"register_resource": {"id": "automation_test_1"}}

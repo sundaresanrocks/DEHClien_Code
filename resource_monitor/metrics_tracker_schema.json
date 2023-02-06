@@ -1,0 +1,13 @@
+{
+  "_id": "ResourceID",
+  "ResourceID": "<<>>",
+  "ResourceName": "<<>>",
+  "LastUpdated": "<<>>",
+  "Resource": "<<Image Name>>",
+  "Service": ["<<List of service/s running>>"],
+  "Current Status": "<<Running/ Stopped/ Paused>>",
+  "ReferenceIDs" : {"BSE": "<<BSE Registration ID>>",
+                    "RRM": "<<RRM Registration ID>>"},
+  "Metadata":"<<static data>>",
+  "Metrics": {<<timestamp>>:{"CPU": 1, "memory": 2},<<timestamp>>:{"CPU": 1, "memory": 2}}
+}

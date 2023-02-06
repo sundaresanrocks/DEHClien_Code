@@ -1,0 +1,100 @@
+{"Resource 1":
+{
+  "metrics": [
+    {"2021-04-07": {
+      "cpu_percent" :
+      {
+        "average": 10,
+        "highestPeak": 30,
+        "lowestPeak": 10
+      },
+      "mem_percent" :
+      {
+        "average": 10,
+        "highestPeak": 30,
+        "lowestPeak": 10
+      }
+    }
+    },
+    {"2021-04-08": {
+      "cpu_percent" :
+      {
+        "average": 100,
+        "highestPeak": 300,
+        "lowestPeak": 100
+      },
+      "mem_percent" :
+      {
+        "average": 100,
+        "highestPeak": 300,
+        "lowestPeak": 100
+      }
+    }
+    },
+    {"2021-04-09": {
+      "cpu_percent" :
+      {
+        "average": 100,
+        "highestPeak": 300,
+        "lowestPeak": 100
+      },
+      "mem_percent" :
+      {
+        "average": 100,
+        "highestPeak": 300,
+        "lowestPeak": 100
+      }
+    }
+    }
+  ]
+},
+  "Resource 2": {
+  "metrics": [
+    {"2021-04-07": {
+      "cpu_percent" :
+      {
+        "average": 10,
+        "highestPeak": 30,
+        "lowestPeak": 10
+      },
+      "mem_percent" :
+      {
+        "average": 10,
+        "highestPeak": 30,
+        "lowestPeak": 10
+      }
+    }
+    },
+    {"2021-04-08": {
+      "cpu_percent" :
+      {
+        "average": 100,
+        "highestPeak": 300,
+        "lowestPeak": 100
+      },
+      "mem_percent" :
+      {
+        "average": 100,
+        "highestPeak": 300,
+        "lowestPeak": 100
+      }
+    }
+    },
+    {"2021-04-09": {
+      "cpu_percent" :
+      {
+        "average": 100,
+        "highestPeak": 300,
+        "lowestPeak": 100
+      },
+      "mem_percent" :
+      {
+        "average": 100,
+        "highestPeak": 300,
+        "lowestPeak": 100
+      }
+    }
+    }
+  ]
+}
+}

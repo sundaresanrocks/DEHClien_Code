@@ -1,0 +1,16 @@
+pika==1.1.0
+PyJWT==1.7.1
+flask~=1.1.2
+docker~=4.4.1
+requests~=2.28.2
+gunicorn
+gevent
+pytz~=2021.1
+urllib3~=1.26.14
+jwt~=1.1.0
+pymongo~=3.11.3
+timeloop~=1.0.2
+Werkzeug~=1.0.1
+python-dateutil
+pyopenssl~=20.0.1
+markupsafe==2.0.1

@@ -1,0 +1,372 @@
+>>>> Build from docker file
+docker build ./ -t dehclient-v2:latest
+
+>>>> DEH Client Workshop Preparation: Meeting 9th Nov 2021 - Antonio & Marko
+######################################
+> Updated presentation.
+> Updated Documentation. Git Labs.
+> List with Examples for API usage.
+
+Presentation flow:
+##################
+Slides
+Schema
+Before DEH Dashboard demom shoe DEH Client Registeration info on Dashbaord--> Resources
+
+For technical demo , we can schedule a seperate workshop with DEV.
+
+
+Needed: Thinks to be taken care. Deadline Thursday - 11th Nov 2021
+Summary/ Workshop Agenda (Share with Antonio)
+PPT (Brief Arch , Interaction with other DEH Components & Demo).
+    Why DEH Client.
+    Features.
+Demo (Installation , usage & integration with DEH Dashboard)
+Use Production Instance of DEH RRM & Dashboard.
+
+>>> Installation Steps:
+########################
+Demo will be done on Linux shell.
+DEH Client deployed on Docker Host.
+DEH Client is deployed as a standalone Docker Solution.
+
+1. Login into the registry
+
+	$ sudo docker login registry.gitlab.com
+
+  Provide your credentials
+
+  Successful Login Respons: Login Succeeded
+
+2. Pull DEH Client Docker Image from the registry :
+
+	$ docker image pull registry.gitlab.com/demeterproject/wp3/demeterenablerhub/dehclient:latest
+
+3. Download the  DEH Client project from GitLab.
+
+	git@gitlab.com:demeterproject/wp3/demeterenablerhub/dehclient.git
+
+1) Docker Pull DEH Client Image:
+docker pull registry.gitlab.com/demeterproject/wp3/demeterenablerhub/dehclient:latest
+
+2) Pull DEH Client from GitLabs
+git clone https://gitlab.com/demeterproject/wp3/demeterenablerhub/dehclient.git
+
+3) Set up Docker Host - Enabler Docker Engine API
+
+4) Update .env file with related attributes,
+Important is the choice between secure_connection as True or False
+
+If choosing secure_connection=False
+4) Docker Compose UP - Create & Start Containers - DEH Client & MongoDB.
+docker-compose -f ./docker-compose.yml up
+
+If choosing secure_connection=True
+4) Docker compose UP , Create Containers with no-start
+docker-compose -f ./docker-compose.yml up no-start
+
+
+5) Download DEH enabler to the Docker Host & Start as Docker Container
+Either use Docker Pull or DEH Client Exposed API to Pull image locally to Docker Host
+> Using Docker Pull
+docker pull demeterengteam/pilot4.2-traslator:candidate
+
+> Using DEH Client API. e.g.,
+Request:
+curl -i -H "Content-Type: application/json" -X POST -d '{"image":"demeterengteam/pilot4.2-traslator","tag":"candidate"}'
+http://172.18.0.3:5003/api/v1/DEHClientEnabler/ResourceManagement/image/pull
+
+Response:
+"sha256:061f1ee69095e5e50b52db9c834ec99e9a73e569c5bfdbfbc4c540c3174fe349"
+
+6) Associate DEH Enabler with UID i.e., RRM registration ID
+"""
+Note : DEH Client validates with RRM if the given UID is valid ie, if the same is
+registered with a DEH resource in RRM before tagging the same with the image locally.
+
+Image : Adding Labels @ runtime
+It's not possible to add a label to an existing image bcz adding a label will change the images checksum and id,
+thus it's no longer the same image.
+But we can build an image based on our existing image with a label added,
+then tag this image with the name of the previously existing image.
+Technically it adds a layer on top of your existing image and thus just "overrides" previous labels
+"""
+> Using Docker build command to associate UID as a label
+echo "FROM demeterengteam/estimate-animal-welfare-condition:candidate" |
+docker build --label uid="601ad929cc5e1504df125b04" -t "demeterengteam/estimate-animal-welfare-condition:candidate" -
+
+> Using DEH Client Exposed API. e.g.,
+Request:
+curl -i -H "Content-Type: application/json" -X POST -d '{"image":"demeterengteam/pilot4.2-traslator",
+"tag":"candidate","labels":{"uid":"610411e8c56e160279440661"}}'
+http://172.18.0.3:5003/api/v1/DEHClientEnabler/ResourceManagement/image/set_label
+
+Response:
+[
+  "{\"stream\":\"Step 1/2 : FROM demeterengteam/pilot4.2-traslator:candidate\"}\r\n",
+  "{\"stream\":\"\\n\"}\r\n",
+  "{\"stream\":\" ---\\u003e b64ef0d5ae43\\n\"}\r\n",
+  "{\"stream\":\"Step 2/2 : LABEL uid=610411e8c56e160279440661  test_tag_today=test_tag_today\"}\r\n",
+  "{\"stream\":\"\\n\"}\r\n",
+  "{\"stream\":\" ---\\u003e Running in da11c8d77b83\\n\"}\r\n",
+  "{\"stream\":\"Removing intermediate container da11c8d77b83\\n\"}\r\n",
+  "{\"stream\":\" ---\\u003e 889d0215ca3b\\n\"}\r\n",
+  "{\"aux\":{\"ID\":\"sha256:889d0215ca3b4c9c9453ef69276f5404689926b987ea01f014eb9bcf58ad81e1\"}}\r\n",
+  "{\"stream\":\"Successfully built 889d0215ca3b\\n\"}\r\n",
+  "{\"stream\":\"Successfully tagged demeterengteam/demeterengteam/pilot4.2-traslator:candidate\\n\"}\r\n"
+]
+
+7) Start downloaded DEH Enabler as Docker Container
+> Using Doccker run
+docker run --name pilot4.2-traslator-workshop-test1 -d demeterengteam/pilot4.2-traslator:candidate
+
+> Using DEH Client API. e.g.,
+Request:
+curl -i -H "Content-Type: application/json" -X POST -d
+'{"image":"demeterengteam/pilot4.2-traslator","tag":"candidate","name":"pilot4.2-traslator_test_ws_1"}'
+http://172.18.0.3:5003/api/v1/DEHClientEnabler/ResourceManagement/container/run
+
+Response:
+{
+  "Status": "Container started successfully !",
+  "container_id": "fde9c084db3a0c69aecf9a62cf0ccdeaae4681fcf279ff0c4c51ffaf61ae3deb",
+  "container_name": "estimate-animal-welfare-condition_demo101"
+}
+
+
+
+2) Docker compose , create Containers with no-start
+docker-compose -f ./docker-compose.yml up
+
+>>>> Log Parser:
+#################
+curl -X GET "http://172.18.0.3:5003/api/v1/DEHClientEnabler/ResourceConsumption/get_container_logs?
+container=331991ea2d3039d76436d256626922a67a613bb7f5b44536756f4c452ccde8e7&pattern=ERROR"
+
+or
+
+curl -X GET "http://192.168.128.3:5003/api/v1/DEHClientEnabler/ResourceConsumption/get_container_logs?
+container=999b605754c48a342106974cc3bd53462dc4ea66eaa3aace073e91f7db26ed4a&pattern=POST&tail=10000" | json
+
+or
+
+curl -X GET "http://192.168.128.3:5003/api/v1/DEHClientEnabler/ResourceConsumption/get_container_logs?
+container=999b605754c48a342106974cc3bd53462dc4ea66eaa3aace073e91f7db26ed4a&pattern=POST&tail=10000" | json
+
+####################################
+>>>> List Of DEHClient Exposed APIs:
+####################################
+>> Generate Metrics: By Container Name or ID & By Container's status
+
+> Metrics by uid
+curl -X GET "http://10.0.10.132:5003/api/v1/DEHClientEnabler/ResourceConsumption/metrics?uid=610411e8c56e160279440661"
+
+> Metrics by status
+curl -X GET "http://10.0.10.132:5003/api/v1/DEHClientEnabler/ResourceConsumption/metrics?status=running"
+curl -X GET "http://10.0.10.132:5003/api/v1/DEHClientEnabler/ResourceConsumption/metrics?status=all"
+
+> Metrics by name
+curl -X GET
+"http://localhost:5003/api/v1/DEHClientEnabler/ResourceConsumption/individual/metrics?name=estimate-animal-welfare-condition_demo101"
+
+> Metrics by container ID:
+curl -X GET "http://172.18.0.3:5003/api/v1/DEHClientEnabler/ResourceConsumption/individual/metrics?id=fde9c084db3a"
+
+>>>> Other useful APIs: Container Discovery
+########################
+> Get list of all running containers
+curl -X GET "http://10.0.10.132:5003/api/v1/DEHClientEnabler/ResourceConsumption/running_containers"
+
+[
+  "estimate-animal-welfare-condition_demo101",
+  "estimate-animal-welfare-condition_demo18",
+  "estimate-animal-welfare-condition_demo17",
+  "estimate-animal-welfare-condition_demo12",
+  "estimate-animal-welfare-condition_demo7",
+  "estimate-animal-welfare-condition_demo6",
+  "estimate-animal-welfare-condition_demo2"
+]
+
+> Filter
+########
+> filter by label
+curl -X GET
+"http://172.18.0.3:5003/api/v1/DEHClientEnabler/ResourceConsumption/get_resources_filter?label=uid=610411e8c56e160279440661"
+
+[
+  "estimate-animal-welfare-condition_demo101",
+  "estimate-animal-welfare-condition_demo18",
+  "estimate-animal-welfare-condition_demo17",
+  "estimate-animal-welfare-condition_demo12",
+  "estimate-animal-welfare-condition_demo7"
+]
+
+> filter by status
+curl -X GET "http://172.18.0.3:5003/api/v1/DEHClientEnabler/ResourceConsumption/get_resources_filter?status=exited"
+
+curl -X GET "http://172.18.0.3:5003/api/v1/DEHClientEnabler/ResourceConsumption/get_resources_filter?status=running"
+
+curl -X GET "http://172.18.0.3:5003/api/v1/DEHClientEnabler/ResourceConsumption/get_resources_filter?
+ancestor=demeterengteam/estimate-animal-welfare-condition:candidate"
+[
+  "estimate-animal-welfare-condition_demo101",
+  "estimate-animal-welfare-condition_demo18",
+  "estimate-animal-welfare-condition_demo17",
+  "estimate-animal-welfare-condition_demo12",
+  "estimate-animal-welfare-condition_demo7"
+]
+
+
+>> Pull Image:
+##############
+With DEH Client deployed and configured to communicate with Docker Host,
+Use this API to pull any Docker Image locally on the Docker Host.
+
+> Case 1: Valid Docker Image name & tag --> Successfully download & response SHA256 Hash
+e.g.,
+Request:
+curl -i -H "Content-Type: application/json" -X POST -d '{"image":"demeterengteam/pilot4.2-traslator","tag":"candidate"}'
+http://172.18.0.3:5003/api/v1/DEHClientEnabler/ResourceManagement/image/pull
+
+Response:
+"sha256:061f1ee69095e5e50b52db9c834ec99e9a73e569c5bfdbfbc4c540c3174fe349"
+
+> Case 2: Invalid image name --> Failed to download & ERROR response
+e.g.,
+Request:
+curl -i -H "Content-Type: application/json" -X POST -d '{"image":"demeterengteam/pilot4.2-traslator-invalid","tag":"candidate"}'
+http://localhost:5003/api/v1/DEHClientEnabler/ResourceManagement/image/pull
+
+Response:
+"Image : demeterengteam/pilot4.2-traslator-invalid with
+tag : candidate not found in registry or low disk space on local host,
+please check the image name & available disk space."
+
+> Invalid tag
+curl -i -H "Content-Type: application/json" -X POST -d '{"image":"demeterengteam/pilot4.2-traslator23","tag":"candidate123"}'
+http://localhost:5003/api/v1/DEHClientEnabler/ResourceManagement/image/pull
+
+> Invalid image name
+curl -i -H "Content-Type: application/json" -X POST -d '{"image":"demeterengteam/pilot4.2-traslator23","tag":"candidate123"}'
+http://localhost:5003/api/v1/DEHClientEnabler/ResourceManagement/image/pull
+
+"Image : demeterengteam/pilot4.2-traslator23 with tag : candidate123 not found in registry or
+low disk space on local host, please check the image name & available disk space."
+
+>> Run DEH Enabler/s as a Docker Container
+##########################################
+
+With DEH Client deployed and configured to communicate with Docker Host &
+Docker Image/ DEH Enabler downloaded locally on Docker Host.
+Use this API to start instances i.e. Container/s of the Docker Image.
+
+> Case 1: Valid Image Name & tag --> Successfully Starts Container & response Container ID.
+e.g.,
+Request:
+curl -i -H "Content-Type: application/json" -X POST -d
+'{"image":"demeterengteam/demeterengteam/estimate-animal-welfare-condition","tag":"candidate","name":"estimate-animal-welfare-condition_demo1"}'
+http://localhost:5003/api/v1/DEHClientEnabler/ResourceManagement/container/run
+
+Response:
+{
+  "Status": "Container started successfully !",
+  "container_id": "fde9c084db3a0c69aecf9a62cf0ccdeaae4681fcf279ff0c4c51ffaf61ae3deb",
+  "container_name": "estimate-animal-welfare-condition_demo101"
+}
+
+> Case 2: In-valid Image Name & tag --> Failed to start Container  & ERROR response
+e.g.,
+Request:
+curl -i -H "Content-Type: application/json" -X POST -d
+'{"image":"demeterengteam/estimate-animal-welfare-condition-invalid","tag":"candidate","name":"estimate-animal-welfare-condition_demo1"}'
+http://localhost:5003/api/v1/DEHClientEnabler/ResourceManagement/container/run
+
+Response:
+{
+  "message": "Image : demeterengteam/estimate-animal-welfare-condition-invalid:candidate not found."
+}
+
+> Case 3: Attempt to Start Container with already existing Container Name:
+e.g.,
+Request:
+ curl -i -H "Content-Type: application/json" -X
+ POST -d  '{"image":"centos","name":"centos_demo_1"}'
+ http://localhost:5003/api/v1/DEHClientEnabler/ResourceManagement/container/run
+
+Response:
+"The Container by name estimate-animal-welfare-condition_demo1 already exists, Please use a different Container name"
+
+> Valid image name but invalid tag. e.g.,
+Request:
+curl -i -H "Content-Type: application/json" -X POST -d
+'{"image":"demeterengteam/estimate-animal-welfare-condition","tag":"candidate123",
+"name":"estimate-animal-welfare-condition_demo1"}'
+http://localhost:5003/api/v1/DEHClientEnabler/ResourceManagement/container/run
+
+Response:
+"Communication with docker socket failed or Docker Image not found or Image with specified tag not found.
+Please check Image & tag Error response : 404 Client Error for
+http://10.0.10.132:2375/v1.41/images/create?tag=candidate123&fromImage=demeterengteam%2Festimate-animal-welfare-condition: Not Found (\"manifest for demeterengteam/estimate-animal-welfare-condition:candidate123 not found: manifest unknown: manifest unknown\") "
+
+> Add uid as label
+####################
+    Note : DEH Client validates with RRM if the given UID is valid ie, if the same is
+registered with a DEH resource in RRM before tagging the same with the image locally.
+
+Image : Adding Labels @ runtime
+It's not possible to add a label to an existing image bcz adding a label will change the images checksum and id,
+thus it's no longer the same image.
+But we can build an image based on our existing image with a label added,
+then tag this image with the name of the previously existing image.
+Technically it adds a layer on top of your existing image and thus just "overrides" previous labels
+"""
+
+> Adding uid to the resources at runtime:
+echo "FROM demeterengteam/estimate-animal-welfare-condition:candidate" |
+sudo docker build --label uid="601ad929cc5e1504df125b04" -t "demeterengteam/estimate-animal-welfare-condition:candidate" -
+
+> Once this is done all the Containers instances will have the label referenced
+
+> invalid UID
+curl -i -H "Content-Type: application/json" -X POST -d '{"image":"demeterengteam/estimate-animal-welfare-condition",
+"tag":"candidate","labels":{"uid":"610411e8c56e160279440663"}}'
+http://localhost:5003/api/v1/DEHClientEnabler/ResourceManagement/image/set_label
+
+Response:
+"DEH RRM, resource search result returned success,
+but no resource found/ registered with UID 610411e8c56e160279440663. Skipping label. Check if the UID is registered against a valid DEH resource"
+
+> Valid UID:
+curl -i -H "Content-Type: application/json" -X POST -d '{"image":"demeterengteam/estimate-animal-welfare-condition",
+"tag":"candidate","labels":{"uid":"610411e8c56e160279440661"}}'
+http://localhost:5003/api/v1/DEHClientEnabler/ResourceManagement/image/set_label
+
+Response:
+[
+  "{\"stream\":\"Step 1/2 : FROM demeterengteam/estimate-animal-welfare-condition:candidate\"}\r\n",
+  "{\"stream\":\"\\n\"}\r\n",
+  "{\"stream\":\" ---\\u003e b64ef0d5ae43\\n\"}\r\n",
+  "{\"stream\":\"Step 2/2 : LABEL uid=610411e8c56e160279440661  test_tag_today=test_tag_today\"}\r\n",
+  "{\"stream\":\"\\n\"}\r\n",
+  "{\"stream\":\" ---\\u003e Running in da11c8d77b83\\n\"}\r\n",
+  "{\"stream\":\"Removing intermediate container da11c8d77b83\\n\"}\r\n",
+  "{\"stream\":\" ---\\u003e 889d0215ca3b\\n\"}\r\n",
+  "{\"aux\":{\"ID\":\"sha256:889d0215ca3b4c9c9453ef69276f5404689926b987ea01f014eb9bcf58ad81e1\"}}\r\n",
+  "{\"stream\":\"Successfully built 889d0215ca3b\\n\"}\r\n",
+  "{\"stream\":\"Successfully tagged demeterengteam/estimate-animal-welfare-condition:candidate\\n\"}\r\n"
+]
+
+> Invalid image
+curl -i -H "Content-Type: application/json" -X POST -d '{"image":"centos123","tag":"latest","labels":{"uid":"610411e8c56e160279440661"}}'
+http://localhost:5003/api/v1/DEHClientEnabler/ResourceManagement/image/set_label
+
+Reponse:
+"Image : centos123 with tag : latest not found in registry or low disk space on local host,
+please check the image name & available disk space."
+
+>>>> Log Parser:
+#################
+curl -X GET "http://172.18.0.3:5003/api/v1/DEHClientEnabler/ResourceConsumption/get_container_logs?
+container=331991ea2d3039d76436d256626922a67a613bb7f5b44536756f4c452ccde8e7&pattern=ERROR"
+
+

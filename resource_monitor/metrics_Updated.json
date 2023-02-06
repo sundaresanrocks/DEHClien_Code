@@ -1,0 +1,243 @@
+[
+  {
+    "_id": "6b287fb8cf24f3ee6631ba6b87bb40a6e70633af50cc1a45424aab700c8565f7",
+    "uptime": 516240,
+    "hostname": "6b287fb8cf24",
+    "ip": "172.17.0.8",
+    "image": "demeterengteam/estimate-animal-welfare-condition:candidate",
+    "BSE_ID": "DEMETER:BSE-ID:(estimate-animal-welfare-condition-test2)-5161d27f-fd6c-44c7-850c-4c7897e573fa",
+    "RRM_ID": "603e49e837801e241cf995df",
+    "lastupdated": "2021-07-13T10:26:30Z",
+    "cpu_percent": [
+      {
+        "time_stamp": "2021-07-13T10:26:43Z",
+        "time_roud": "2021-07-13",
+        "cpu_percent": 0.1016043216080402
+      },
+      {
+        "time_stamp": "2021-07-13T10:26:30Z",
+        "cpu_percent": 0.09015743119266055
+      }
+    ],
+    "mem_percent": [
+      {
+        "time_stamp": "2021-07-13T10:26:43Z",
+        "mem_percent": 7.367424467971086
+      },
+      {
+        "time_stamp": "2021-07-13T10:26:30Z",
+        "mem_percent": 7.3672259867493946
+      }
+    ]
+  },
+  {
+    "_id": "77bcfd3aeb04f7731e4b5beac43ffad5267a1889c74ef99669ead411f48504c5",
+    "uptime": 595606,
+    "hostname": "77bcfd3aeb04",
+    "ip": "172.17.0.7",
+    "image": "demeterengteam/estimate-animal-welfare-condition:candidate",
+    "BSE_ID": "DEMETER:BSE-ID:(estimate-animal-welfare-condition-test1)-3a022e54-8f24-4551-9e8a-85cc0887cd45",
+    "RRM_ID": "603e49e837801e241cf995df",
+    "lastupdated": "2021-07-13T10:26:31Z",
+    "cpu_percent": [
+      {
+        "time_stamp": "2021-07-13T10:26:31Z",
+        "cpu_percent": 0.09393625
+      },
+      {
+        "time_stamp": "2021-07-13T10:26:43Z",
+        "cpu_percent": 0.08991773755656109
+      }
+    ],
+    "mem_percent": [
+      {
+        "time_stamp": "2021-07-13T10:26:31Z",
+        "mem_percent": 9.77321535609516
+      },
+      {
+        "time_stamp": "2021-07-13T10:26:43Z",
+        "mem_percent": 9.77321535609516
+      }
+    ]
+  },
+  {
+    "_id": "1be5b544e35dded5cb836a8183574799128706896a47c1b4a08b2f957f87032d",
+    "uptime": 1020367,
+    "hostname": "1be5b544e35d",
+    "ip": "172.17.0.6",
+    "image": "demeterengteam/estimate-animal-welfare-condition:candidate",
+    "BSE_ID": "DEMETER:BSE-ID:(container1)-b25297fe-472a-4d42-b030-0eb34d23890e",
+    "RRM_ID": "603e49e837801e241cf995df",
+    "lastupdated": "2021-07-13T10:26:31Z",
+    "cpu_percent": [
+      {
+        "time_stamp": "2021-07-13T10:26:31Z",
+        "cpu_percent": 0.10933296482412061
+      },
+      {
+        "time_stamp": "2021-07-13T10:26:43Z",
+        "cpu_percent": 0.08362904977375565
+      }
+    ],
+    "mem_percent": [
+      {
+        "time_stamp": "2021-07-13T10:26:43Z",
+        "mem_percent": 8.430589131962225
+      },
+      {
+        "time_stamp": "2021-07-13T10:26:31Z",
+        "mem_percent": 8.430390650740534
+      }
+    ]
+  },
+  {
+    "_id": "f1f6f834216aa2c4f25628e26f8b78d0927e0e5ec838df509deb11b9fdacffa0",
+    "uptime": 5785116,
+    "hostname": "f1f6f834216a",
+    "ip": "172.17.0.4",
+    "image": "demeterengteam/estimate-animal-welfare-condition:candidate",
+    "BSE_ID": "DEMETER:BSE-ID:(estimate-animal-welfare-condition-ws01)-4d21281c-520a-4fd9-95cc-e6e827925c39",
+    "RRM_ID": "603e49e837801e241cf995df",
+    "lastupdated": "2021-07-13T10:26:31Z",
+    "cpu_percent": [
+      {
+        "time_stamp": "2021-07-13T10:26:43Z",
+        "cpu_percent": 0.09159619909502262
+      },
+      {
+        "time_stamp": "2021-07-13T10:26:31Z",
+        "cpu_percent": 0.09117162790697675
+      }
+    ],
+    "mem_percent": [
+      {
+        "time_stamp": "2021-07-13T10:26:31Z",
+        "mem_percent": 8.700523593462822
+      },
+      {
+        "time_stamp": "2021-07-13T10:26:43Z",
+        "mem_percent": 8.700523593462822
+      }
+    ]
+  },
+  {
+    "_id": "889ee0063a21d917a6dee45f942720d9a539e91f56a76032210d04689a2c8c1e",
+    "uptime": 5364611,
+    "hostname": "889ee0063a21",
+    "ip": "172.17.0.5",
+    "image": "registry.gitlab.com/demeterproject/wp3/demeterenablerhub/dehclient:v1",
+    "BSE_ID": "DEMETER:BSE-ID:(dehclient_ws01)-e0e34949-6786-4cdf-9bba-a20335945441",
+    "RRM_ID": "603e49e837801e241cf995df",
+    "lastupdated": "2021-07-13T10:26:31Z",
+    "cpu_percent": [
+      {
+        "time_stamp": "2021-07-13T10:26:43Z",
+        "cpu_percent": 1.7064828855721395
+      },
+      {
+        "time_stamp": "2021-07-13T10:26:31Z",
+        "cpu_percent": 1.516123725490196
+      }
+    ],
+    "mem_percent": [
+      {
+        "time_stamp": "2021-07-13T10:26:31Z",
+        "mem_percent": 1.6551349076863837
+      },
+      {
+        "time_stamp": "2021-07-13T10:26:43Z",
+        "mem_percent": 1.6551349076863837
+      }
+    ]
+  },
+  {
+    "_id": "ea54770e700cea125cb607cfcc0ba446831067a65e6ffa761765d1418afc64e6",
+    "uptime": 5942892,
+    "hostname": "ea54770e700c",
+    "ip": "172.17.0.3",
+    "image": "demeterengteam/estimate-animal-welfare-condition:candidate",
+    "BSE_ID": "DEMETER:BSE-ID:(estimate-animal-welfare-condition-ws1)-c0a47c76-e867-47be-b16d-37388ead6e73",
+    "RRM_ID": "603e49e837801e241cf995df",
+    "lastupdated": "2021-07-13T10:26:31Z",
+    "cpu_percent": [
+      {
+        "time_stamp": "2021-07-13T10:26:31Z",
+        "cpu_percent": 0.09951125
+      },
+      {
+        "time_stamp": "2021-07-13T10:26:43Z",
+        "cpu_percent": 0.09319081081081082
+      }
+    ],
+    "mem_percent": [
+      {
+        "time_stamp": "2021-07-13T10:26:31Z",
+        "mem_percent": 9.275027489649204
+      },
+      {
+        "time_stamp": "2021-07-13T10:26:43Z",
+        "mem_percent": 9.275027489649204
+      }
+    ]
+  },
+  {
+    "_id": "fecbb53dfa7893708853e12c664978417febbfaff8928f3b8532fda9df924a55",
+    "uptime": 6633040,
+    "hostname": "fecbb53dfa78",
+    "ip": "172.17.0.2",
+    "image": "demeterengteam/estimate-animal-welfare-condition:candidate",
+    "BSE_ID": "DEMETER:BSE-ID:(estimate-animal-welfare-condition-demo11)-7616f78e-d6c0-4bdd-8d71-79ea65577d0d",
+    "RRM_ID": "603e49e837801e241cf995df",
+    "lastupdated": "2021-07-13T10:26:31Z",
+    "cpu_percent": [
+      {
+        "time_stamp": "2021-07-13T10:26:43Z",
+        "cpu_percent": 0.09810936585365855
+      },
+      {
+        "time_stamp": "2021-07-13T10:26:31Z",
+        "cpu_percent": 0.09259148325358851
+      }
+    ],
+    "mem_percent": [
+      {
+        "time_stamp": "2021-07-13T10:26:31Z",
+        "mem_percent": 7.641923997570591
+      },
+      {
+        "time_stamp": "2021-07-13T10:26:43Z",
+        "mem_percent": 7.641923997570591
+      }
+    ]
+  },
+  {
+    "_id": "1ed2e72245400b94e31a36d6db342995faa4226242856a4cb877e537263ac18c",
+    "uptime": 6635987,
+    "hostname": "1ed2e7224540",
+    "ip": "172.20.0.2",
+    "image": "demeter/capability-manager",
+    "BSE_ID": "DEMETER:BSE-ID:(authorization_capabilitymanager_1)-a0b36cd7-ea1e-4859-868f-8ad818134606",
+    "RRM_ID": "603e49e837801e241cf995df",
+    "lastupdated": "2021-07-13T10:26:31Z",
+    "cpu_percent": [
+      {
+        "time_stamp": "2021-07-13T10:26:43Z",
+        "cpu_percent": 0.02605513274336283
+      },
+      {
+        "time_stamp": "2021-07-13T10:26:31Z",
+        "cpu_percent": 0.02076517073170732
+      }
+    ],
+    "mem_percent": [
+      {
+        "time_stamp": "2021-07-13T10:26:31Z",
+        "mem_percent": 0.2684458523379103
+      },
+      {
+        "time_stamp": "2021-07-13T10:26:43Z",
+        "mem_percent": 0.2684458523379103
+      }
+    ]
+  }
+]
